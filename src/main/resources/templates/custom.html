@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Dropzone.js -->
+    <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title">
+                        <i class="fa fa-paw"></i>
+                        <span>小马自提管理后台</span>
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>商品添加</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <form class="form-horizontal" role="form" id="custom_form"
+                                      th:action="@{/custom/input}" th:method="post">
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品类型：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control"
+                                                    name="product_type" id="product_type">
+                                                <option value="0" selected="selected">现货商品</option>
+                                                <option value="1">预约商品</option>
+                                            </select>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">预约类型：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control"
+                                                    name="reservation_type" id="reservation_type">
+                                                <option value="0" selected="selected">预约类型1</option>
+                                                <option value="1">预约类型2</option>
+                                                <option value="2">预约类型3</option>
+                                                <option value="3">预约类型4</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品标题：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入商品标题"
+                                                   id="title" name="title"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品价格：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="请输入商品标题"
+                                                   id="price" name="price"/>
+                                        </div>
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="明天价格"
+                                                   id="tomorrow_price" name="tomorrow_price"/>
+                                        </div>
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="商品单位"
+                                                   id="unit" name="unit"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品体型：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="长"
+                                                   id="length" name="length"/>
+                                        </div>
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="宽"
+                                                   id="width" name="width"/>
+                                        </div>
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="高"
+                                                   id="height" name="height"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">最低预警库存量：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入最低预警库存量"
+                                                   id="low" name="low"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品权重：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入最低预警库存量"
+                                                   id="privilege" name="privilege"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">上传主图片：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="file" class="form-control" name="main_pic"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">上传辅图片：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic1"/>
+                                        </div>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic2"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">&nbsp;</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic3"/>
+                                        </div>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic4"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">&nbsp;</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic5"/>
+                                        </div>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic6"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">&nbsp;</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic7"/>
+                                        </div>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic8"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">&nbsp;</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic9"/>
+                                        </div>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="file" class="form-control" name="pic10"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="custom_form" class="btn btn-success">添加商品
+                                            </button>
+                                            <button type="reset" class="btn btn-default">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/bootstrap-editable/bootstrap-editable.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- Dropzone.js -->
+<script th:src="@{/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+
+<script type="application/javascript">
+    $(document).ready((function () {
+//                $.fn.editable.defaults.mode = 'inline';
+                $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
+                $('#product_type');
+                $('#reservation_type');
+                $('#title');
+                $('#price');
+                $('#tomorrow_price');
+                $('#length');
+                $('#width');
+                $('#height');
+                $('#unit');
+                $('#low');
+                $('#privilege');
+                $('#main_pic');
+
+                $('#custom_form').submit(function (e) {
+
+                    var formData = new FormData($(this)[0]);
+                    console.log(formData);
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/custom/input",
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data["result"] == true) {
+                                location.reload();
+                                alert("上传成功");
+                            } else {
+                                alert(data["msg"]);
+                            }
+                        }
+                    });
+                });
+            })
+    );
+</script>
+</body>
+</html>
+</html>

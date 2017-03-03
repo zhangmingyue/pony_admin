@@ -117,14 +117,8 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.2.3</version>
+			<version>4.4.1</version>
 			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-			<version>4.2.1</version>
 		</dependency>
 
 		<dependency>
@@ -144,6 +138,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -151,6 +151,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- Set the character encoding for the JVM -->
+				<configuration>
+					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

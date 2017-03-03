@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu" th:fragment="sidebar_menu">
+    <div class="menu_section">
+        <h3> &nbsp; </h3>
+        <ul class="nav side-menu">
+            <li><a><i class="fa fa-home"></i> 首页编辑<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+            <li><a><i class="fa fa-edit"></i> 商品 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{/custom}">商品发布</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-desktop"></i> 库存 <span
+                    class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+            <li><a><i class="fa fa-table"></i> 售后/投诉 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+            <li><a><i class="fa fa-bar-chart-o"></i> 数据 <span
+                    class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+            <li><a><i class="fa fa-clone"></i>账号 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+
+            <li><a><i class="fa fa-clone"></i>类目 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{/category}">类目添加</a></li>
+                </ul>
+            </li>
+
+            <li><a><i class="fa fa-clone"></i>自提柜 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+
+            <li><a><i class="fa fa-clone"></i>订单模板 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- jQuery -->
+    <script th:src="@{vendors/jquery/dist/jquery.min.js}"></script>
+    <!-- Bootstrap -->
+    <script th:src="@{vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{vendors/fastclick/lib/fastclick.js}"></script>
+    <!-- NProgress -->
+    <script th:src="@{vendors/nprogress/nprogress.js}"></script>
+    <!-- Custom Theme Scripts -->
+    <script th:src="@{build/js/custom.min.js}"></script>
+
+</div>
+</html>
