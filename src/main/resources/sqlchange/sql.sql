@@ -16,3 +16,10 @@ CREATE TABLE `test`.`category` (
  PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='唯一类目表';
 
+CREATE TABLE `test`.`reservation` (
+ `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+ `name` VARCHAR (512) NULL COMMENT '预约名称',
+ `url` VARCHAR (1024) NOT NULL COMMENT '图片url',
+ `date` DATE  COMMENT '创建时间',
+ PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='唯一预约表';

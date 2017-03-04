@@ -3,15 +3,16 @@ package com.pony_admin.domain;
 import java.util.Date;
 
 /**
+ * 预约类
+ *
  * @author: qiaoyi
  * @edit:
- * @created:17/3/3
+ * @created:17/3/4
  */
-public class CategoryEntity {
+public class ReservationEntity {
     private int id;
     private String name;
-    private String type;
-    private String parent;
+    private String url;
     private Date date;
 
     public int getId() {
@@ -30,20 +31,12 @@ public class CategoryEntity {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getUrl() {
+        return url;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getParent() {
-        return parent;
-    }
-
-    public void setParent(String parent) {
-        this.parent = parent;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Date getDate() {
@@ -56,11 +49,10 @@ public class CategoryEntity {
 
     @Override
     public String toString() {
-        return "CategoryEntity{" +
+        return "ReservationEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", parent='" + parent + '\'' +
+                ", url='" + url + '\'' +
                 ", date=" + date +
                 '}';
     }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.CategoryDAO">
+
+    <insert id="insert" parameterType="com.pony_admin.domain.CategoryEntity">
+        <selectKey resultType="int" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO
+        `category`(
+        `name`,
+        `type`,
+        `parent`,
+        `date`
+        )VALUES(
+        #{name},
+        #{type},
+        #{parent},
+        #{date}
+        )
+    </insert>
+
+    <select id="getCategoryByType" resultType="com.pony_admin.domain.CategoryEntity">
+        SELECT *  FROM `category` where `type`=#{type}
+    </select>
+
+</mapper>

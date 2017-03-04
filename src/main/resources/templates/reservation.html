@@ -56,8 +56,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>类目添加
-                                    <small>请注意:一级类目直接添加,二级类目需要选择一级目录后添加,三级目录需要选择二级目录后添加</small>
+                                <h2>预约类型
                                 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -67,61 +66,26 @@
                             </div>
                             <div class="x_content">
                                 <form class="form-horizontal" role="form" id="category_form"
-                                      th:action="@{/category/add}" th:method="post">
+                                      th:action="@{/reservation/add}" th:method="post">
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">一级类目添加：</label>
+                                        <label class="control-label col-sm-2">预约类型添加：</label>
 
-                                        <div class="controls col-sm-8">
-                                            <input type="text" class="form-control" placeholder="请输入一级类目"
-                                                   id="level1" name="level1"/>
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入预约类型"
+                                                   id="reservation" name="reservation"/>
                                         </div>
 
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">二级目录添加：</label>
-                                        <div class="controls col-sm-3">
-                                            <select class="form-control "
-                                                    id="level2_level1"
-                                                    name="level2_level1">
+                                        <label class="control-label col-sm-2">预约图片添加：</label>
+                                        <label class="control-label col-sm-">&nbsp;</label>
 
-                                                <option th:each="var:${level1}" th:value="${var.id}"
-                                                        th:text="${var.name}">
-                                                    ${var.name}
-                                                </option>
-                                            </select>
+                                        <div class="controls col-sm-6">
+                                            <input type="file" class="form-control" name="pic"/>
                                         </div>
 
-                                        <label class="control-label col-sm-2">二级类目：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="text" class="form-control" placeholder="请输入二级类目名称标题"
-                                                   id="level2_level2"
-                                                   name="level2_level2"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">三级目录添加：</label>
-                                        <div class="controls col-sm-3">
-                                            <select class="form-control"
-                                                    id="level3_level2"
-                                                    name="level3_level2">
-
-                                                <option th:each="var:${level2}" th:value="${var.id}"
-                                                        th:text="${var.name}">
-                                                    ${var.name}
-                                                </option>
-                                            </select>
-                                        </div>
-
-                                        <label class="control-label col-sm-2">三级类目：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="text" class="form-control" placeholder="请输入三级类目名称标题"
-                                                   id="level3" name="level3"/>
-                                        </div>
                                     </div>
 
 
@@ -168,18 +132,15 @@
 <script th:src="@{/build/js/custom.min.js}"></script>
 <script type="application/javascript">
     $(document).ready((function () {
-                $('#level1');
-                $('#level2_level1');
-                $('#level2_level2');
-                $('#level3_level2');
-                $('#level3');
+                $('#reservation');
+                $('#pic');
 
                 $('#category_form').submit(function (e) {
 
                     var formData = new FormData($(this)[0]);
                     e.preventDefault();
                     $.ajax({
-                        url: "/category/input",
+                        url: "/reservation/input",
                         type: 'POST',
                         data: formData,
                         contentType: false,

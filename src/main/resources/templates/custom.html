@@ -80,7 +80,6 @@
                                 <form class="form-horizontal" role="form" id="custom_form"
                                       th:action="@{/custom/input}" th:method="post">
 
-
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">商品类型：</label>
 
@@ -313,6 +312,7 @@
                             if (data["result"] == true) {
                                 location.reload();
                                 alert("上传成功");
+                                window.location.reload();
                             } else {
                                 alert(data["msg"]);
                             }

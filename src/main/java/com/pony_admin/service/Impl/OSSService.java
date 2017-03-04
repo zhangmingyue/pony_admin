@@ -20,7 +20,6 @@ public class OSSService {
     private static final String ACCESS_KEY_ID = "LTAIWJwgxakkV5n3";
     private static final String ACCESS_KEY_SECRET = "YLwNLhTpKAD6Mhvml136RgFW19Jh1V";
     private static final String ENDPOINT = "oss-cn-qingdao.aliyuncs.com";
-    private static final String BUCKET_NAME = "pony-custom";
 
     /**
      * 上传文件,返回文件的url,返回null证明存储失败
@@ -29,15 +28,15 @@ public class OSSService {
      * @return
      * @throws FileNotFoundException
      */
-    public String savePicAndGetUrl(InputStream inputStream, String bucketKey) throws FileNotFoundException {
+    public String savePicAndGetUrl(InputStream inputStream, String bucketName,String bucketKey) throws FileNotFoundException {
         try {
             OSSClient ossClient = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
-            PutObjectResult result = ossClient.putObject(BUCKET_NAME, bucketKey, inputStream);
+            PutObjectResult result = ossClient.putObject(bucketName, bucketKey, inputStream);
             if (result == null || result.getETag() == null) {
                 return null;
             }
 
-            OSSObject ossObject = ossClient.getObject(BUCKET_NAME,bucketKey);
+            OSSObject ossObject = ossClient.getObject(bucketName,bucketKey);
             String url = ossObject==null?null:ossObject.getResponse().getUri();
             return url;
         } catch (Exception e) {

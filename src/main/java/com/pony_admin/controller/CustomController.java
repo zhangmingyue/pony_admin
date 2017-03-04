@@ -1,5 +1,7 @@
 package com.pony_admin.controller;
 
+import com.pony_admin.domain.CategoryEntity;
+import com.pony_admin.service.CategoryService;
 import com.pony_admin.service.Impl.OSSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,8 +27,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/custom")
 public class CustomController {
+
+    private static final String BUCKET_NAME = "pony-custom";
+
     @Autowired
     OSSService ossService;
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     String customs(Model model,
@@ -61,8 +69,11 @@ public class CustomController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
         MultipartFile file = multipartRequest.getFile("main_pic");
-        String resutl = ossService.savePicAndGetUrl(file.getInputStream(), "qiaoyitest");
+        String resutl = ossService.savePicAndGetUrl(file.getInputStream(), BUCKET_NAME,"qiaoyitest");
 
+
+        List<CategoryEntity> list = categoryService.getCategoryByType("1");
+        modelMap.put("orgList", list);
         modelMap.put("result", true);
 
         return modelMap;

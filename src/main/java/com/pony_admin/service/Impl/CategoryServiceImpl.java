@@ -6,6 +6,8 @@ import com.pony_admin.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author: qiaoyi
  * @edit:
@@ -20,5 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int insert(CategoryEntity categoryEntity) {
         return category.insert(categoryEntity);
+    }
+
+    @Override
+    public List<CategoryEntity> getCategoryByType(String type) {
+        return category.getCategoryByType(type);
     }
 }

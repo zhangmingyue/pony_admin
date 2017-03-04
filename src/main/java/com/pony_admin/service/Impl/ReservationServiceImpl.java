@@ -1,0 +1,23 @@
+package com.pony_admin.service.Impl;
+
+import com.pony_admin.dao.ReservationDAO;
+import com.pony_admin.domain.ReservationEntity;
+import com.pony_admin.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author: qiaoyi
+ * @edit:
+ * @created:17/3/4
+ */
+@Service
+public class ReservationServiceImpl implements ReservationService {
+    @Autowired
+    private ReservationDAO reservationDAO;
+
+    @Override
+    public int insert(ReservationEntity reservationEntity) {
+        return reservationDAO.insert(reservationEntity);
+    }
+}
