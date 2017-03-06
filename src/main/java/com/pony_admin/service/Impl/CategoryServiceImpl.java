@@ -28,4 +28,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryEntity> getCategoryByType(String type) {
         return category.getCategoryByType(type);
     }
+
+    @Override
+    public List<CategoryEntity> getCategoryByParent(String parent) {
+        return category.getCategoryByParent(parent);
+    }
 }

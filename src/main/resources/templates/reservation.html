@@ -17,6 +17,8 @@
 
     <!-- Custom Theme Style -->
     <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+    <!--validator-->
+    <link th:href="@{/js/validator.in.js}" rel="stylesheet"/>
 </head>
 
 <body class="nav-md">
@@ -73,21 +75,10 @@
 
                                         <div class="controls col-sm-6">
                                             <input type="text" class="form-control" placeholder="请输入预约类型"
-                                                   id="reservation" name="reservation"/>
+                                                   id="reservation" name="reservation" required="required"/>
                                         </div>
 
                                     </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">预约图片添加：</label>
-                                        <label class="control-label col-sm-">&nbsp;</label>
-
-                                        <div class="controls col-sm-6">
-                                            <input type="file" class="form-control" name="pic"/>
-                                        </div>
-
-                                    </div>
-
 
                                     <div class="clearfix"></div>
 
@@ -111,9 +102,8 @@
 
         <!-- footer content -->
         <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
+            <div th:include="foot::foot"></div>
+
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
@@ -130,6 +120,19 @@
 <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
 <!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
 <script th:src="@{/build/js/custom.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sysmsg-error").click(function () {
+            $(this).hide();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 <script type="application/javascript">
     $(document).ready((function () {
                 $('#reservation');

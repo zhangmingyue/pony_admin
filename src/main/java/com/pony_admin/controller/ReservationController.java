@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +27,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/reservation")
 public class ReservationController {
-    private static final String BUCKET_NAME = "pony-reservation";
     @Autowired
     OSSService ossService;
     @Autowired
@@ -48,19 +46,23 @@ public class ReservationController {
         Map<String, Object> model = new HashMap<>();
         String reservation = request.getParameter("reservation");
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile file = multipartRequest.getFile("pic");
 
         long time = System.currentTimeMillis();
-        String timeStr = String.valueOf(time);
         Date date = new Date(time);
+        try {
+            ReservationEntity reservationEntity = new ReservationEntity();
+            reservationEntity.setName(reservation);
+            reservationEntity.setDate(date);
+            int result = reservationService.insert(reservationEntity);
 
-        String url = ossService.savePicAndGetUrl(file.getInputStream(), BUCKET_NAME, reservation + timeStr);
-        ReservationEntity reservationEntity = new ReservationEntity();
-        reservationEntity.setName(reservation);
-        reservationEntity.setUrl(url);
-        reservationEntity.setDate(date);
-        int result = reservationService.insert(reservationEntity);
-
+            if (result >= 1) {
+                model.put("result", true);
+                return model;
+            }
+        } catch (Exception e) {
+            model.put("result", false);
+            model.put("msg", "添加失败,请重新尝试");
+        }
         return model;
     }
 }

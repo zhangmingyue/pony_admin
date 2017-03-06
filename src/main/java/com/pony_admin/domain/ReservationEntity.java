@@ -12,7 +12,6 @@ import java.util.Date;
 public class ReservationEntity {
     private int id;
     private String name;
-    private String url;
     private Date date;
 
     public int getId() {
@@ -31,14 +30,6 @@ public class ReservationEntity {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -52,7 +43,6 @@ public class ReservationEntity {
         return "ReservationEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
                 ", date=" + date +
                 '}';
     }

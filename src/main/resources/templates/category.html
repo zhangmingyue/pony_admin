@@ -14,7 +14,6 @@
     <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
     <!-- Font Awesome -->
     <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
-
     <!-- Custom Theme Style -->
     <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
 </head>
@@ -31,9 +30,7 @@
                 <!-- menu profile quick info -->
                 <div th:include="menu_profile::menu_profile"></div>
                 <!-- /menu profile quick info -->
-
                 <br/>
-
                 <!-- sidebar menu -->
                 <div th:include="sidebar_menu"></div>
                 <!-- /sidebar menu -->
@@ -146,12 +143,8 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
+        <div th:include="foot::foot"></div>
+
         <!-- /footer content -->
     </div>
 </div>

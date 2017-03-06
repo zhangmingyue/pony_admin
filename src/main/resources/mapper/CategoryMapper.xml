@@ -24,4 +24,8 @@
         SELECT *  FROM `category` where `type`=#{type}
     </select>
 
+    <select id="getCategoryByParent" resultType="com.pony_admin.domain.CategoryEntity">
+        SELECT *  FROM `category` where `parent`=#{parent}
+    </select>
+
 </mapper>

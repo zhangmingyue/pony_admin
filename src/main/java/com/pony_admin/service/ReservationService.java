@@ -2,6 +2,8 @@ package com.pony_admin.service;
 
 import com.pony_admin.domain.ReservationEntity;
 
+import java.util.List;
+
 /**
  * @author: qiaoyi
  * @edit:
@@ -10,4 +12,6 @@ import com.pony_admin.domain.ReservationEntity;
 public interface ReservationService {
 
     int insert(ReservationEntity reservationEntity);
+
+    List<ReservationEntity> getAllReservationName();
 }

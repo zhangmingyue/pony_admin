@@ -18,6 +18,8 @@
     <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet"/>
     <!-- Custom Theme Style -->
     <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+    <!--validator-->
+    <link th:href="@{/js/validator.in.js}" rel="stylesheet"/>
 </head>
 
 <body class="nav-md">
@@ -81,6 +83,33 @@
                                       th:action="@{/custom/input}" th:method="post">
 
                                     <div class="form-group">
+                                        <label class="control-label col-sm-2">类目类型：</label>
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control "
+                                                    id="org1"
+                                                    name="org1">
+                                                <option th:each="var:${level1}" th:value="${var.id}"
+                                                        th:text="${var.name}" th:org1-parentId="${var.id}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control" id="org2" name="org2">
+                                                <option value="-1" org1-parentId="-1">请选择</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control" id="org3" name="org3">
+                                                <option value="-1" org1-parentId="-1">请选择</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="control-label col-sm-2">商品类型：</label>
 
                                         <div class="controls col-sm-2">
@@ -94,12 +123,13 @@
                                         <label class="control-label col-sm-2">预约类型：</label>
 
                                         <div class="controls col-sm-2">
-                                            <select class="form-control"
-                                                    name="reservation_type" id="reservation_type">
-                                                <option value="0" selected="selected">预约类型1</option>
-                                                <option value="1">预约类型2</option>
-                                                <option value="2">预约类型3</option>
-                                                <option value="3">预约类型4</option>
+                                            <select class="form-control "
+                                                    id="reservation_type"
+                                                    name="reservation_type">
+                                                <option th:each="var:${reservation}" th:value="${var.id}"
+                                                        th:text="${var.name}">
+                                                    ${var.name}
+                                                </option>
                                             </select>
                                         </div>
 
@@ -110,7 +140,7 @@
 
                                         <div class="controls col-sm-6">
                                             <input type="text" class="form-control" placeholder="请输入商品标题"
-                                                   id="title" name="title"/>
+                                                   id="title" name="title" required="required"/>
                                         </div>
 
                                     </div>
@@ -120,15 +150,15 @@
 
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="请输入商品标题"
-                                                   id="price" name="price"/>
+                                                   id="price" name="price" required="required"/>
                                         </div>
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="明天价格"
-                                                   id="tomorrow_price" name="tomorrow_price"/>
+                                                   id="tomorrow_price" name="tomorrow_price" required="required"/>
                                         </div>
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="商品单位"
-                                                   id="unit" name="unit"/>
+                                                   id="unit" name="unit" required="required"/>
                                         </div>
                                     </div>
 
@@ -137,15 +167,15 @@
 
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="长"
-                                                   id="length" name="length"/>
+                                                   id="length" name="length" required="required"/>
                                         </div>
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="宽"
-                                                   id="width" name="width"/>
+                                                   id="width" name="width" required="required"/>
                                         </div>
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="高"
-                                                   id="height" name="height"/>
+                                                   id="height" name="height" required="required"/>
                                         </div>
                                     </div>
 
@@ -154,7 +184,7 @@
 
                                         <div class="controls col-sm-6">
                                             <input type="text" class="form-control" placeholder="请输入最低预警库存量"
-                                                   id="low" name="low"/>
+                                                   id="low" name="low" required="required"/>
                                         </div>
                                     </div>
 
@@ -163,7 +193,7 @@
 
                                         <div class="controls col-sm-6">
                                             <input type="text" class="form-control" placeholder="请输入最低预警库存量"
-                                                   id="privilege" name="privilege"/>
+                                                   id="privilege" name="privilege" required="required"/>
                                         </div>
                                     </div>
 
@@ -171,7 +201,8 @@
                                         <label class="control-label col-sm-2">上传主图片：</label>
 
                                         <div class="controls col-sm-6">
-                                            <input type="file" class="form-control" name="main_pic"/>
+                                            <input type="file" class="form-control" name="main_pic"
+                                                   required="required"/>
                                         </div>
                                     </div>
 
@@ -256,12 +287,7 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
+        <div th:include="foot::foot"></div>
         <!-- /footer content -->
     </div>
 </div>
@@ -279,6 +305,118 @@
 <script th:src="@{/vendors/dropzone/dist/min/dropzone.min.js}"></script>
 <!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
 <script th:src="@{/build/js/custom.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            minView: 2,
+            maxView: 2,
+            autoclose: true,
+            todayBtn: true,
+            todayHighlight: true,
+            language: 'zh-CN',
+            viewSelect: 'month',
+            pickTime: true
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sysmsg-error").click(function () {
+            $(this).hide();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script type="text/javascript">
+    $("#org1").on("change", function (e) {
+        $("#org2").html('<option value="-1" org1-parentId="-1">请选择</option>');
+        $("#org3").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+        var parentId = $(e.target).val();
+        console.log(parentId);
+
+        $.ajax({
+            type: 'POST',
+            url: "/category/get_by_parent/" + parentId,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var orgModelList = data.orgModelList;
+
+                var orgFrameEle = document.createDocumentFragment();
+
+                /*<![CDATA[*/
+                for (var i = 0, len = orgModelList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = orgModelList[i].id;
+                    tmpOptionEle.setAttribute("parentId", orgModelList[i].parent);
+                    tmpOptionEle.innerHTML = orgModelList[i].name;
+                    orgFrameEle.appendChild(tmpOptionEle);
+                }
+                /*]]>*/
+
+                $("#org2").append(orgFrameEle);
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+
+    });
+
+    $("#org2").on("change", function (e) {
+        $("#org3").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+        var parentId = $(e.target).val();
+        console.log(parentId);
+        if (parentId == -1) {
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "/category/get_by_parent/" + parentId,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var orgModelList = data.orgModelList;
+                var orgFrameEle = document.createDocumentFragment();
+                /*<![CDATA[*/
+                for (var i = 0, len = orgModelList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = orgModelList[i].id;
+                    tmpOptionEle.innerHTML = orgModelList[i].name;
+                    orgFrameEle.appendChild(tmpOptionEle);
+                }
+                /*]]>*/
+                $("#org3").append(orgFrameEle);
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+    });
+
+</script>
 
 <script type="application/javascript">
     $(document).ready((function () {

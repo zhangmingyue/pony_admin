@@ -9,14 +9,16 @@
         INSERT INTO
         `reservation`(
         `name`,
-        `url`,
         `date`
         )VALUES(
         #{name},
-        #{url},
         #{date}
         )
     </insert>
+
+    <select id="getAllReservationList" resultType="com.pony_admin.domain.ReservationEntity">
+        SELECT `name` FROM `reservation`
+    </select>
 
 
 </mapper>

@@ -28,7 +28,7 @@ public class OSSService {
      * @return
      * @throws FileNotFoundException
      */
-    public String savePicAndGetUrl(InputStream inputStream, String bucketName,String bucketKey) throws FileNotFoundException {
+    public String savePicAndGetUrl(InputStream inputStream, String bucketName, String bucketKey) throws FileNotFoundException {
         try {
             OSSClient ossClient = new OSSClient(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
             PutObjectResult result = ossClient.putObject(bucketName, bucketKey, inputStream);
@@ -36,13 +36,12 @@ public class OSSService {
                 return null;
             }
 
-            OSSObject ossObject = ossClient.getObject(bucketName,bucketKey);
-            String url = ossObject==null?null:ossObject.getResponse().getUri();
+            OSSObject ossObject = ossClient.getObject(bucketName, bucketKey);
+            String url = ossObject == null ? null : ossObject.getResponse().getUri();
             return url;
         } catch (Exception e) {
             logger.info(" OSSService Exception e={}", e);
             return null;
         }
     }
-
 }

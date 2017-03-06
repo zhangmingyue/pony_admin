@@ -4,11 +4,9 @@ import com.google.common.base.Strings;
 import com.pony_admin.domain.CategoryEntity;
 import com.pony_admin.enumeration.CategoryType;
 import com.pony_admin.service.CategoryService;
-import com.pony_admin.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +50,7 @@ public class CategoryController {
         return "category";
     }
 
-    @RequestMapping(value = "/get_by_id/{id}", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/get_by_parent/{id}", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public Map<String, Object> getCategoryByType(@PathVariable int id) throws Exception {
         Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -61,7 +59,7 @@ public class CategoryController {
             return modelMap;
         }
 
-        List<CategoryEntity> list = categoryService.getCategoryByType(String.valueOf(id));
+        List<CategoryEntity> list = categoryService.getCategoryByParent(String.valueOf(id));
         modelMap.put("orgModelList", list);
         return modelMap;
     }

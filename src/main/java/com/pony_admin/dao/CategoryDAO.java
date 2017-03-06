@@ -14,4 +14,6 @@ public interface CategoryDAO {
     int insert(CategoryEntity categoryEntity);
 
     List<CategoryEntity> getCategoryByType(String type);
+
+    List<CategoryEntity> getCategoryByParent(String parent);
 }
