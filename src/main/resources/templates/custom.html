@@ -19,7 +19,7 @@
     <!-- Custom Theme Style -->
     <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
     <!--validator-->
-    <link th:href="@{/js/validator.in.js}" rel="stylesheet"/>
+    <link th:href="@{/js/validator.min.js}" rel="stylesheet"/>
 </head>
 
 <body class="nav-md">
@@ -149,12 +149,12 @@
                                         <label class="control-label col-sm-2">商品价格：</label>
 
                                         <div class="controls col-sm-2">
-                                            <input type="text" class="form-control" placeholder="请输入商品标题"
+                                            <input type="text" class="form-control" placeholder="请输入商品价格"
                                                    id="price" name="price" required="required"/>
                                         </div>
                                         <div class="controls col-sm-2">
-                                            <input type="text" class="form-control" placeholder="明天价格"
-                                                   id="tomorrow_price" name="tomorrow_price" required="required"/>
+                                            <input type="text" class="form-control dtpicker form_datetime"
+                                                   id="beginTime" name="beginTime" placeholder="截止时间" />
                                         </div>
                                         <div class="controls col-sm-2">
                                             <input type="text" class="form-control" placeholder="商品单位"
@@ -449,7 +449,7 @@
                         success: function (data) {
                             if (data["result"] == true) {
                                 location.reload();
-                                alert("上传成功");
+                                alert(data["msg"]);
                                 window.location.reload();
                             } else {
                                 alert(data["msg"]);

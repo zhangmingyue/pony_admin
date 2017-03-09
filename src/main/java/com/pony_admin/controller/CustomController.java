@@ -1,12 +1,9 @@
 package com.pony_admin.controller;
 
-import com.pony_admin.domain.CategoryEntity;
-import com.pony_admin.domain.ProductEntity;
-import com.pony_admin.domain.ReservationEntity;
+import com.pony_admin.domain.*;
 import com.pony_admin.enumeration.CategoryType;
-import com.pony_admin.service.CategoryService;
+import com.pony_admin.service.*;
 import com.pony_admin.service.Impl.OSSService;
-import com.pony_admin.service.ReservationService;
 import com.pony_admin.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +43,12 @@ public class CustomController {
     CategoryService categoryService;
     @Autowired
     ReservationService reservationService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    ProductPictureService productPictureService;
+    @Autowired
+    ProductPriceService productPriceService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     String customs(Model model,
@@ -55,6 +58,8 @@ public class CustomController {
         List<CategoryEntity> list = categoryService.getCategoryByType(CategoryType.level1);
         List<ReservationEntity> reservation = reservationService.getAllReservationName();
 
+
+
         model.addAttribute("level1", list);
         model.addAttribute("reservation", reservation);
         return "custom";
@@ -63,8 +68,7 @@ public class CustomController {
 
     @RequestMapping(value = "/input", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> inputCustoms(Model model,
-                                            HttpServletRequest request,
+    public Map<String, Object> inputCustoms(HttpServletRequest request,
                                             HttpServletResponse response
     ) throws IOException, ParseException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -76,20 +80,13 @@ public class CustomController {
         String reservationType = request.getParameter("reservation_type");
         String title = request.getParameter("title");
         String price = request.getParameter("price");
-        String tomorrowPrice = request.getParameter("tomorrow_price");
         String length = request.getParameter("length");
         String width = request.getParameter("width");
         String heigh = request.getParameter("height");
         String unit = request.getParameter("unit");
         String low = request.getParameter("low");
         String privilege = request.getParameter("privilege");
-        String promotion = request.getParameter("promotion");
-        String promotionNumber = request.getParameter("promotion_number");
         String beginTime = request.getParameter("beginTime");
-        String endTime = request.getParameter("endTime");
-        String idRestrictionNumber = request.getParameter("id_restriction_number");
-        String creditScore = request.getParameter("credit_score");
-        String promotionPrice = request.getParameter("promotion_price");
 
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
@@ -97,39 +94,82 @@ public class CustomController {
         String timeStr = String.valueOf(time);
         Date date = new Date(time);
 
+        ProductEntity productEntity = productEntityBuilder(level1, level2, level3, productType,
+                reservationType, title, price, length, width, heigh, unit, low,
+                privilege);
+
         MultipartFile mainPic = multipartRequest.getFile("main_pic");
         String mainPicUrl = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, mainPic + timeStr);
 
-        MultipartFile pic1 = multipartRequest.getFile("pic1");
-        String pic1Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic1 + timeStr);
+        productEntity.setProductIconUrl(mainPicUrl);
+        int test = productService.insert(productEntity);
+        int id = productEntity.getId();
+        if (test >= 1) {
 
-        MultipartFile pic2 = multipartRequest.getFile("pic2");
-        String pic2Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic2 + timeStr);
+            String productNumber = productService.productNumberBuilder(
+                    Integer.parseInt(level1), Integer.parseInt(level2),
+                    Integer.parseInt(level3), id
+            );
+            productService.updateProductId(productNumber, id);
 
-        MultipartFile pic3 = multipartRequest.getFile("pic3");
-        String pic3Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic3 + timeStr);
+            MultipartFile pic1 = multipartRequest.getFile("pic1");
+            int pic1Result = pinInsert(pic1, id, timeStr, 1);
+            MultipartFile pic2 = multipartRequest.getFile("pic2");
+            int pic2Result = pinInsert(pic2, id, timeStr, 0);
+            MultipartFile pic3 = multipartRequest.getFile("pic3");
+            int pic3Result = pinInsert(pic3, id, timeStr, 0);
+            MultipartFile pic4 = multipartRequest.getFile("pic4");
+            int pic4Result = pinInsert(pic4, id, timeStr, 0);
+            MultipartFile pic5 = multipartRequest.getFile("pic5");
+            int pic5Result = pinInsert(pic5, id, timeStr, 0);
+            MultipartFile pic6 = multipartRequest.getFile("pic6");
+            int pic6Result = pinInsert(pic6, id, timeStr, 0);
+            MultipartFile pic7 = multipartRequest.getFile("pic7");
+            int pic7Result = pinInsert(pic7, id, timeStr, 0);
+            MultipartFile pic8 = multipartRequest.getFile("pic8");
+            int pic8Result = pinInsert(pic8, id, timeStr, 0);
+            MultipartFile pic9 = multipartRequest.getFile("pic9");
+            int pic9Result = pinInsert(pic9, id, timeStr, 0);
+            MultipartFile pic10 = multipartRequest.getFile("pic10");
+            int pic10Result = pinInsert(pic10, id, timeStr, 0);
 
-        MultipartFile pic4 = multipartRequest.getFile("pic4");
-        String pic4Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic4 + timeStr);
+            ProductPriceEntity productPriceEntity = new ProductPriceEntity();
+            productPriceEntity.setPrice(Double.parseDouble(price));
+            productPriceEntity.setProductId(id);
+            productPriceEntity.setEnableDate(TimeUtil.parse(beginTime, "yyyy-MM-dd HH:mm:ss"));
+            productPriceService.insert(productPriceEntity);
 
-        MultipartFile pic5 = multipartRequest.getFile("pic5");
-        String pic5Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic5 + timeStr);
+            modelMap.put("result", true);
+            modelMap.put("msg", "图片状态" + pic1Result + " " + pic2Result + "" +
+                    pic3Result + " " + pic4Result + " " + pic5Result + " " + pic6Result + " " +
+                    pic7Result + "" + pic8Result + "" + pic9Result + "" + pic10Result);
+            return modelMap;
+        }
 
-        MultipartFile pic6 = multipartRequest.getFile("pic6");
-        String pic6Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic6 + timeStr);
+        modelMap.put("result", false);
+        modelMap.put("msg", "数据库插入错误");
+        return modelMap;
+    }
 
-        MultipartFile pic7 = multipartRequest.getFile("pic7");
-        String pic7Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic7 + timeStr);
+    private int pinInsert(MultipartFile pic, int id, String timeStr, int cover) throws IOException {
+        String pic1Url = ossService.savePicAndGetUrl(pic.getInputStream(), BUCKET_NAME, pic + timeStr);
+        return productPictureService.insert(pictureEntityBuilder(pic1Url, cover, id));
+    }
 
-        MultipartFile pic8 = multipartRequest.getFile("pic8");
-        String pic8Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic8 + timeStr);
 
-        MultipartFile pic9 = multipartRequest.getFile("pic9");
-        String pic9Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic9 + timeStr);
-
-        MultipartFile pic10 = multipartRequest.getFile("pic10");
-        String pic10Url = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, pic10 + timeStr);
-
+    private ProductEntity productEntityBuilder(String level1,
+                                               String level2,
+                                               String level3,
+                                               String productType,
+                                               String reservationType,
+                                               String title,
+                                               String price,
+                                               String length,
+                                               String width,
+                                               String heigh,
+                                               String unit,
+                                               String low,
+                                               String privilege) {
         ProductEntity productEntity = new ProductEntity();
 
         //类目
@@ -139,37 +179,26 @@ public class CustomController {
         //商品类型
         productEntity.setIsSpot(Integer.parseInt(productType));
         productEntity.setReservation(reservationType);
+        productEntity.setUnit(unit);
         //商品标题
         productEntity.setProductName(title);
-        //TODO 商品价格
         //商品体积
         productEntity.setLength(Integer.parseInt(length));
         productEntity.setWidth(Integer.parseInt(width));
         productEntity.setHigh(Integer.parseInt(heigh));
-        //TODO 最低预警库存
+        //低库存预警
+        productEntity.setAlertNumber(Integer.parseInt(low));
         //商品权重
         productEntity.setWeight(Integer.parseInt(privilege));
-        //是否为促销商品
-        productEntity.setPromotion(Integer.parseInt(promotion));
-        productEntity.setPromotionNumber(Integer.parseInt(promotionNumber));
-        productEntity.setPromotionBeginTime(TimeUtil.parse(beginTime, pattern));
-        productEntity.setPromotionEndTime(TimeUtil.parse(endTime, pattern));
-        productEntity.setPromotionPrice(Double.parseDouble(promotionPrice));
-        //促销ID限购量
-        productEntity.setIdRestrictionNumber(Integer.parseInt(idRestrictionNumber));
-        //信用分数限制
-        productEntity.setCreditScore(Integer.parseInt(creditScore));
-        //主图片
-        productEntity.setProductIconUrl(mainPicUrl);
 
+        return productEntity;
+    }
 
-        productEntity.setProductNumber("absdbajdb");
-
-
-        List<CategoryEntity> list = categoryService.getCategoryByType("1");
-        modelMap.put("orgList", list);
-        modelMap.put("result", true);
-
-        return modelMap;
+    private ProductPictureEntity pictureEntityBuilder(String url, int cover, int id) {
+        ProductPictureEntity productPictureEntity = new ProductPictureEntity();
+        productPictureEntity.setProductPictureUrl(url);
+        productPictureEntity.setCoverPicture(cover);
+        productPictureEntity.setProduct_id(id);
+        return productPictureEntity;
     }
 }

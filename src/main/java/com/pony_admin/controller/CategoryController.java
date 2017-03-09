@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import com.pony_admin.domain.CategoryEntity;
 import com.pony_admin.enumeration.CategoryType;
 import com.pony_admin.service.CategoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "/category")
 public class CategoryController {
+    private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
     CategoryService categoryService;
@@ -53,6 +56,7 @@ public class CategoryController {
     @RequestMapping(value = "/get_by_parent/{id}", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public Map<String, Object> getCategoryByType(@PathVariable int id) throws Exception {
+        log.info("id={}", id);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (id < 0) {
             modelMap.put("result", false);
@@ -60,6 +64,7 @@ public class CategoryController {
         }
 
         List<CategoryEntity> list = categoryService.getCategoryByParent(String.valueOf(id));
+        log.info("list={}", list);
         modelMap.put("orgModelList", list);
         return modelMap;
     }

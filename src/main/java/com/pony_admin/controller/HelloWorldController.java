@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 
 
@@ -21,29 +22,27 @@ import java.util.Date;
 @RequestMapping("/")
 public class HelloWorldController {
 
-    @Autowired
-    ProductService productService;
 
     @GetMapping("/index")
     String index(Model model) {
-        Date date  = new Date();
+//        Date date  = new Date();
 
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setProductName("name");
-        productEntity.setProductNumber("absdbajdb");
-        productEntity.setPromotionNumber(100);
-        productEntity.setIsSpot(0);
-        productEntity.setPromotion(90);
-        productEntity.setLength(80);
-        productEntity.setWidth(70);
-        productEntity.setHigh(90);
-        productEntity.setProductIconUrl("url");
-        productEntity.setWeight(50);
-        productEntity.setPromotionBeginTime(date);
-        productEntity.setPromotionEndTime(date);
-        productEntity.setIdRestrictionNumber(1);
-        productEntity.setPromotion(10);
-        productEntity.setCreditScore(100);
+//        ProductEntity productEntity = new ProductEntity();
+//        productEntity.setProductName("name");
+//        productEntity.setProductNumber("absdbajdb");
+//        productEntity.setPromotionNumber(100);
+//        productEntity.setIsSpot(0);
+//        productEntity.setPromotion(90);
+//        productEntity.setLength(80);
+//        productEntity.setWidth(70);
+//        productEntity.setHigh(90);
+//        productEntity.setProductIconUrl("url");
+//        productEntity.setWeight(50);
+//        productEntity.setPromotionBeginTime(date);
+//        productEntity.setPromotionEndTime(date);
+//        productEntity.setIdRestrictionNumber(1);
+//        productEntity.setPromotion(10);
+//        productEntity.setCreditScore(100);
 
 //        String level1 = request.getParameter("org1");
 //        String level2 = request.getParameter("org2");
@@ -65,7 +64,7 @@ public class HelloWorldController {
 //        productEntity.setCategoryCodeOne("1");
 //        productEntity.setCategoryCodeThree("3");
 //        productEntity.setCategoryCodetTwo("2");
-        productService.insert(productEntity);
+//        productService.insert(productEntity);
         return "index";
     }
 }

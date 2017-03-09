@@ -49,6 +49,10 @@ public class ProductEntity {
     private String categoryCodeThree;
     //预约名称
     private String reservation;
+    //低库存预警量
+    private int alertNumber;
+    //商品单位
+    private String unit;
 
     public int getId() {
         return id;
@@ -218,6 +222,22 @@ public class ProductEntity {
         this.reservation = reservation;
     }
 
+    public int getAlertNumber() {
+        return alertNumber;
+    }
+
+    public void setAlertNumber(int alertNumber) {
+        this.alertNumber = alertNumber;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
@@ -242,6 +262,8 @@ public class ProductEntity {
                 ", categoryCodetTwo='" + categoryCodetTwo + '\'' +
                 ", categoryCodeThree='" + categoryCodeThree + '\'' +
                 ", reservation='" + reservation + '\'' +
+                ", alertNumber=" + alertNumber +
+                ", unit='" + unit + '\'' +
                 '}';
     }
 }

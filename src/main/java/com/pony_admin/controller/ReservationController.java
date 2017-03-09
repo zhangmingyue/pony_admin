@@ -3,6 +3,8 @@ package com.pony_admin.controller;
 import com.pony_admin.domain.ReservationEntity;
 import com.pony_admin.service.Impl.OSSService;
 import com.pony_admin.service.ReservationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/reservation")
 public class ReservationController {
+    private static final Logger log = LoggerFactory.getLogger(ReservationController.class);
+
     @Autowired
     OSSService ossService;
     @Autowired
@@ -54,6 +58,7 @@ public class ReservationController {
             reservationEntity.setName(reservation);
             reservationEntity.setDate(date);
             int result = reservationService.insert(reservationEntity);
+            log.info("result = {}", result);
 
             if (result >= 1) {
                 model.put("result", true);
