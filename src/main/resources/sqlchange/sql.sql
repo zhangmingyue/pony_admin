@@ -48,3 +48,24 @@ CREATE TABLE `test`.`product` (
   PRIMARY KEY (`id`),
   KEY `product_number` (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+ALTER table `test`.`product` add alert_number int(11) COMMENT '低库存预警';
+ALTER table `test`.`product` add unit varchar(32) COMMENT '产品单位';
+
+CREATE TABLE `test`.`product_price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  `price` double(6,2) NOT NULL,
+  `enable_date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `produc_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `test`.`product_picture` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `product_picture_url` varchar(255) NOT NULL COMMENT '产品图片路径',
+  `coverpicture` int(1) NOT NULL DEFAULT '0' COMMENT '是否为主展示图1为是，0为否',
+  `product_id` int(11) NOT NULL COMMENT '产品id外键',
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

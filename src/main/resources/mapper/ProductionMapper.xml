@@ -34,11 +34,11 @@
         id_restriction_number AS idRestrictionNumber , promotion_number AS promotionNumber,
         credit_score AS creditScore , category_code_one AS categoryCodeOne,
         category_code_two AS categoryCodetTwo , category_code_three as categoryCodeThree ,
-        reservation
+        reservation,alert_number AS alertNumber
     </sql>
 
     <insert id="insert" parameterType="com.pony_admin.domain.ProductEntity">
-        <selectKey resultType="int" keyProperty="id">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID() as id
         </selectKey>
         INSERT INTO
@@ -48,15 +48,19 @@
         `product_icon_url`,`weight`,`promotion_begin_time`,
         `promotion_end_time`,`id_restriction_number`,`promotion_number`,
         `credit_score`,`category_code_one`,`category_code_two`,
-        `category_code_three`,`reservation`
+        `category_code_three`,`reservation`,`alert_number`,`unit`
         )VALUES(
         #{productName} , #{productNumber} , #{promotionPrice},
         #{isSpot} , #{promotion} , #{length},#{width},#{high},
         #{productIconUrl} , #{weight} , #{promotionBeginTime},
         #{promotionEndTime},#{idRestrictionNumber},#{promotionNumber},
         #{creditScore},#{categoryCodeOne},#{categoryCodetTwo},
-        #{categoryCodeThree},#{reservation}
+        #{categoryCodeThree},#{reservation},#{alertNumber},#{unit}
         )
     </insert>
+
+    <update id="updateProductId" parameterType="map">
+        update product set product_number=#{product_number} WHERE id=#{id}
+    </update>
 
 </mapper>
