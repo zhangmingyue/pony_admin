@@ -13,6 +13,7 @@ public class CategoryEntity {
     private String type;
     private String parent;
     private Date date;
+    private int isFresh;
 
     public int getId() {
         return id;
@@ -54,6 +55,14 @@ public class CategoryEntity {
         this.date = date;
     }
 
+    public int getIsFresh() {
+        return isFresh;
+    }
+
+    public void setIsFresh(int isFresh) {
+        this.isFresh = isFresh;
+    }
+
     @Override
     public String toString() {
         return "CategoryEntity{" +
@@ -62,6 +71,7 @@ public class CategoryEntity {
                 ", type='" + type + '\'' +
                 ", parent='" + parent + '\'' +
                 ", date=" + date +
+                ", isFresh=" + isFresh +
                 '}';
     }
 }

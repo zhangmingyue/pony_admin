@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.DistrictDAO">
+
+    <insert id="insert" parameterType="com.pony_admin.domain.DistrictEntity">
+        <selectKey resultType="int" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `district`(
+        `district_name`
+        )VALUES (
+        #{districtName}
+
+        )
+    </insert>
+
+    <select id="getAllList" resultType="com.pony_admin.domain.DistrictEntity">
+        select `id`,`district_name` as `districtName` from `district`;
+    </select>
+
+</mapper>

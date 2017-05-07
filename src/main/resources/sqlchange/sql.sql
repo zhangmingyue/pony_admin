@@ -69,3 +69,42 @@ CREATE TABLE `test`.`product_picture` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `test`.`district` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `district_name` varchar(255) NOT NULL COMMENT '城区',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `test`.`residential_area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `residential_area_name` varchar(255) NOT NULL COMMENT '城区',
+  `distric_id` int(11) NOT NULL COMMENT '地区id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+ALTER table `test`.`residential_area`
+ add `building` int(5) COMMENT '多少栋楼',
+ add `house` int(5) COMMENT '多少户',
+ add `house_price` int(5) COMMENT '可输建自提柜数据',
+ add `cabinet_count` int(5) COMMENT '可输建自提柜数据',
+ add `rent_one` int(5) COMMENT '一居租金',
+ add `rent_two` int(5) COMMENT '二居租金',
+ add `rent_three` int(5) COMMENT '三居租金';
+
+CREATE TABLE `test`.`self_lifting_cabinet` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `cabinet_number` varchar(11) NOT NULL COMMENT '自提柜编号',
+  `business_outlet_id` int(11) NOT NULL COMMENT '自提点ID',
+  `warehouse_id` int(11) NOT NULL COMMENT '供货仓库ID',
+  `stocking_base` int(11) NOT NULL COMMENT '备货基数',
+  `district_id` int(11) NOT NULL COMMENT '地区id',
+  `residential_area_id` int(11) NOT NULL COMMENT '小区ID（如花园小区)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+ALTER table `test`.`self_lifting_cabinet`
+ add `location` varchar(512) COMMENT '自提柜具体位置';
+
+ALTER TABLE `test`.`category`
+ADD  `is_fresh` int(2) NOT NULL DEFAULT 0 comment '是否是生鲜类商品,0:正常商品 1:生鲜商品(24小时不能退货)'

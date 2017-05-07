@@ -14,11 +14,8 @@
     <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
     <!-- Font Awesome -->
     <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
-
     <!-- Custom Theme Style -->
     <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
-    <!--validator-->
-    <link th:href="@{/js/validator.in.js}" rel="stylesheet"/>
 </head>
 
 <body class="nav-md">
@@ -33,9 +30,7 @@
                 <!-- menu profile quick info -->
                 <div th:include="menu_profile::menu_profile"></div>
                 <!-- /menu profile quick info -->
-
                 <br/>
-
                 <!-- sidebar menu -->
                 <div th:include="sidebar_menu"></div>
                 <!-- /sidebar menu -->
@@ -58,7 +53,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>预约类型
+                                <h2>地区添加
                                 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -67,33 +62,24 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <form class="form-horizontal" role="form" id="category_form"
-                                      th:action="@{/reservation/add}" th:method="post">
+                                <form class="form-horizontal" role="form" id="address_form"
+                                      th:action="@{/address/add_district}" th:method="post">
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">预约类型添加：</label>
+                                        <label class="control-label col-sm-2">地区添加：</label>
 
-                                        <div class="controls col-sm-6">
-                                            <input type="text" class="form-control" placeholder="请输入预约类型"
-                                                   id="reservation" name="reservation" required="required"/>
+                                        <div class="controls col-sm-8">
+                                            <input type="text" class="form-control" placeholder="请输入地区"
+                                                   id="district_name" name="district_name"/>
                                         </div>
 
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">上传图片：</label>
-
-                                        <div class="controls col-sm-6">
-                                            <input type="file" class="form-control" name="pic" id="pic"
-                                                   required="required"/>
-                                        </div>
                                     </div>
 
                                     <div class="clearfix"></div>
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button type="submit" form="category_form" class="btn btn-success">添加类目
+                                            <button type="submit" form="address_form" class="btn btn-success">添加类目
                                             </button>
                                             <button type="reset" class="btn btn-default">重置</button>
                                         </div>
@@ -110,11 +96,8 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
-            <div th:include="foot::foot"></div>
+        <div th:include="foot::foot"></div>
 
-            <div class="clearfix"></div>
-        </footer>
         <!-- /footer content -->
     </div>
 </div>
@@ -129,37 +112,22 @@
 <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
 <!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
 <script th:src="@{/build/js/custom.min.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#sysmsg-error").click(function () {
-            $(this).hide();
-        });
-    });
-</script>
-
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
 <script type="application/javascript">
     $(document).ready((function () {
-                $('#reservation');
-                $('#pic');
-
-                $('#category_form').submit(function (e) {
+                $('#district_name');
+                $('#address_form').submit(function (e) {
 
                     var formData = new FormData($(this)[0]);
                     e.preventDefault();
                     $.ajax({
-                        url: "/reservation/input",
+                        url: "/address/add_district",
                         type: 'POST',
                         data: formData,
                         contentType: false,
                         processData: false,
                         success: function (data) {
                             if (data["result"] == true) {
-                                alert("类目添加成功");
+                                alert("地区成功");
                                 window.location.reload();
                             } else {
                                 alert(data["msg"]);

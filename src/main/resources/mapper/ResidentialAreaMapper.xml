@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.ResidentialAreaDAO">
+    <sql id="all">
+        select `id`,`residential_area_name` as `residentialAreaName`,`distric_id` AS `districId`,
+        `building` AS `building`, `house`,`house_price` AS `housePrice`, `cabinet_count` as `cabinetCount`,
+        `rent_one` AS `rentOne`, `rent_two` AS `rentTwo`,`rent_three` AS `rentThree`
+    </sql>
+
+    <insert id="insert" parameterType="com.pony_admin.domain.ResidentialAreaEntity">
+        <selectKey resultType="int" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `residential_area`(
+        `residential_area_name`,
+        `distric_id`,
+        `building`,
+        `house`,
+        `house_price`,
+        `cabinet_count`,
+        `rent_one`,
+        `rent_two`,
+        `rent_three`
+        )VALUES (
+        #{residentialAreaName},
+        #{districId},
+        #{building},
+        #{house},
+        #{housePrice},
+        #{cabinetCount},
+        #{rentOne},
+        #{rentTwo},
+        #{rentThree}
+        )
+    </insert>
+
+    <select id="getAllList" resultType="com.pony_admin.domain.ResidentialAreaEntity">
+        <include refid="all"/>
+        FROM residential_area
+    </select>
+
+    <select id="getResidentialById" resultType="com.pony_admin.domain.ResidentialAreaEntity">
+        <include refid="all"/>
+        FROM residential_area where id=#{id}
+    </select>
+
+</mapper>

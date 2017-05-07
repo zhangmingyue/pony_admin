@@ -98,7 +98,7 @@ public class CustomController {
                 privilege);
 
         MultipartFile mainPic = multipartRequest.getFile("main_pic");
-        String mainPicUrl = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, mainPic.getName() + timeStr);
+        String mainPicUrl = ossService.savePicAndGetUrl(mainPic.getInputStream(), BUCKET_NAME, mainPic.getOriginalFilename());
 
         productEntity.setProductIconUrl(mainPicUrl);
         int test = productService.insert(productEntity);
