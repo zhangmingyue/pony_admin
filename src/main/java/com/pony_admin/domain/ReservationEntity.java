@@ -12,6 +12,7 @@ import java.util.Date;
 public class ReservationEntity {
     private int id;
     private String name;
+    private String url;
     private Date date;
 
     public int getId() {
@@ -38,11 +39,20 @@ public class ReservationEntity {
         this.date = date;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "ReservationEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
                 ", date=" + date +
                 '}';
     }

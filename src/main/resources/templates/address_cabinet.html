@@ -14,11 +14,8 @@
     <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
     <!-- Font Awesome -->
     <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
-
     <!-- Custom Theme Style -->
     <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
-    <!--validator-->
-    <link th:href="@{/js/validator.in.js}" rel="stylesheet"/>
 </head>
 
 <body class="nav-md">
@@ -33,9 +30,7 @@
                 <!-- menu profile quick info -->
                 <div th:include="menu_profile::menu_profile"></div>
                 <!-- /menu profile quick info -->
-
                 <br/>
-
                 <!-- sidebar menu -->
                 <div th:include="sidebar_menu"></div>
                 <!-- /sidebar menu -->
@@ -58,7 +53,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>预约类型
+                                <h2>小区添加
                                 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -67,25 +62,78 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <form class="form-horizontal" role="form" id="category_form"
-                                      th:action="@{/reservation/add}" th:method="post">
+                                <form class="form-horizontal" role="form" id="address_form"
+                                      th:action="@{/address/cabinet_add}" th:method="post">
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">预约类型添加：</label>
+                                        <label class="control-label col-sm-2">地区选择：</label>
+                                        <div class="controls col-sm-3">
+                                            <select class="form-control "
+                                                    id="residential_area_id"
+                                                    name="residential_area_id">
 
-                                        <div class="controls col-sm-6">
-                                            <input type="text" class="form-control" placeholder="请输入预约类型"
-                                                   id="reservation" name="reservation" required="required"/>
+                                                <option th:each="var:${cabinet}" th:value="${var.id}"
+                                                        th:text="${var.residentialAreaName}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">柜子编号：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入柜子编号"
+                                                   id="cabinet_number"
+                                                   name="cabinet_number" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">自提点id：</label>
+                                        <div class="controls col-sm-3">
+                                            <select class="form-control "
+                                                    id="business_outlet_id"
+                                                    name="business_outlet_id">
+
+                                                <option value="1">自提点id1</option>
+                                                <option value="2">自提点id2</option>
+                                                <option value="3">自提点id3</option>
+                                                <option value="4">自提点i4</option>
+                                            </select>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">供货仓id：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <select class="form-control "
+                                                    id="warehouse_id"
+                                                    name="warehouse_id">
+
+                                                <option value="1">自提点id1</option>
+                                                <option value="2">自提点id2</option>
+                                                <option value="3">自提点id3</option>
+                                                <option value="4">自提点i4</option>
+                                            </select>
                                         </div>
 
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">上传图片：</label>
 
-                                        <div class="controls col-sm-6">
-                                            <input type="file" class="form-control" name="pic" id="pic"
-                                                   required="required"/>
+                                        <label class="control-label col-sm-2">自提柜具体位置：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入自提柜具体位置"
+                                                   id="location"
+                                                   name="location" required="required"/>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">备货基数：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入自提柜具体位置"
+                                                   id="stocking_base"
+                                                   name="stocking_base" required="required"/>
                                         </div>
                                     </div>
 
@@ -93,7 +141,7 @@
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button type="submit" form="category_form" class="btn btn-success">添加类目
+                                            <button type="submit" form="address_form" class="btn btn-success">添加类目
                                             </button>
                                             <button type="reset" class="btn btn-default">重置</button>
                                         </div>
@@ -110,11 +158,8 @@
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
-            <div th:include="foot::foot"></div>
+        <div th:include="foot::foot"></div>
 
-            <div class="clearfix"></div>
-        </footer>
         <!-- /footer content -->
     </div>
 </div>
@@ -144,22 +189,21 @@
 </script>
 <script type="application/javascript">
     $(document).ready((function () {
-                $('#reservation');
-                $('#pic');
+                $('#district');
 
-                $('#category_form').submit(function (e) {
+                $('#address_form').submit(function (e) {
 
                     var formData = new FormData($(this)[0]);
                     e.preventDefault();
                     $.ajax({
-                        url: "/reservation/input",
+                        url: "/address/cabinet_add",
                         type: 'POST',
                         data: formData,
                         contentType: false,
                         processData: false,
                         success: function (data) {
                             if (data["result"] == true) {
-                                alert("类目添加成功");
+                                alert("类目城区成功");
                                 window.location.reload();
                             } else {
                                 alert(data["msg"]);

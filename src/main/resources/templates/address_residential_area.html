@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div th:include="title::title"></div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+                <br/>
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>小区添加
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <form class="form-horizontal" role="form" id="address_form"
+                                      th:action="@{/address/residential_area_add}" th:method="post">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">地区选择：</label>
+                                        <div class="controls col-sm-3">
+                                            <select class="form-control "
+                                                    id="district"
+                                                    name="district">
+
+                                                <option th:each="var:${district}" th:value="${var.id}"
+                                                        th:text="${var.districtName}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">城区添加：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入城区"
+                                                   id="residential"
+                                                   name="residential" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">楼栋数：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入楼栋数"
+                                                   id="building"
+                                                   name="building" required="required"/>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">户数：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入户数"
+                                                   id="house"
+                                                   name="house" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">房价：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入放假"
+                                                   id="house_price"
+                                                   name="house_price" required="required"/>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">可建自提柜数：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入可建自提柜数"
+                                                   id="cabinet_count"
+                                                   name="cabinet_count" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">一居室租金：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入一居室租金"
+                                                   id="rent_one"
+                                                   name="rent_one" required="required"/>
+                                        </div>
+
+                                        <label class="control-label col-sm-2">二居室租金：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入二居室租金"
+                                                   id="rent_two"
+                                                   name="rent_two" required="required"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">三居室租金：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入三居室租金"
+                                                   id="rent_three"
+                                                   name="rent_three" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="address_form" class="btn btn-success">添加类目
+                                            </button>
+                                            <button type="reset" class="btn btn-default">重置</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:include="foot::foot"></div>
+
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sysmsg-error").click(function () {
+            $(this).hide();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script type="application/javascript">
+    $(document).ready((function () {
+                $('#district');
+                $('#residential');
+                $('#building');
+                $('#house');
+                $('#house_price');
+                $('#cabinet_count');
+                $('#rent_one');
+                $('#rent_two');
+                $('#rent_three');
+
+                $('#address_form').submit(function (e) {
+
+                    var formData = new FormData($(this)[0]);
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/address/add_residential_area",
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data["result"] == true) {
+                                alert("类目城区成功");
+                                window.location.reload();
+                            } else {
+                                alert(data["msg"]);
+                            }
+                        },
+                        error: function (XMLHttpRequest) {
+                            alert(XMLHttpRequest);
+                            alert("查看发生错误，错误码：" + XMLHttpRequest.status);
+
+                        }
+                    });
+                });
+            })
+    );
+</script>
+</body>
+</html>
+</html>

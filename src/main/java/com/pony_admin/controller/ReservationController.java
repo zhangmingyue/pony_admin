@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,9 @@ import java.util.Map;
 public class ReservationController {
     private static final Logger log = LoggerFactory.getLogger(ReservationController.class);
 
+    private static final String BUCKET_NAME = "pony-reservation";
+    private static final String pattern = "yyyy-MM-dd HH:mm:ss";
+
     @Autowired
     OSSService ossService;
     @Autowired
@@ -49,14 +53,19 @@ public class ReservationController {
                                               HttpServletResponse response) throws IOException {
         Map<String, Object> model = new HashMap<>();
         String reservation = request.getParameter("reservation");
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile mainPic = multipartRequest.getFile("pic");
         long time = System.currentTimeMillis();
+        String mainPicUrl = ossService.savePicAndGetUrl(mainPic.getInputStream(),
+                BUCKET_NAME, String.valueOf(time)+mainPic.getOriginalFilename());
+
         Date date = new Date(time);
         try {
             ReservationEntity reservationEntity = new ReservationEntity();
             reservationEntity.setName(reservation);
             reservationEntity.setDate(date);
+            reservationEntity.setUrl(mainPicUrl);
             int result = reservationService.insert(reservationEntity);
             log.info("result = {}", result);
 

@@ -9,9 +9,11 @@
         INSERT INTO
         `reservation`(
         `name`,
+        `url`,
         `date`
         )VALUES(
         #{name},
+        #{url},
         #{date}
         )
     </insert>
