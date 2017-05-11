@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface PermissionService {
 
+    int insert(User user);
+
     List<User> getAll();
 
     User getUserByUserNameAndPassword(String nickname, String password);

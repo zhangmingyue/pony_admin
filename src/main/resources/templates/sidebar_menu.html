@@ -34,6 +34,8 @@
             </li>
             <li><a><i class="fa fa-clone"></i>账号 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
+                    <li><a th:href="@{/account/admin}">创建运营后台登录账号</a></li>
+                    <li><a th:href="@{/account/self_service_admin}">创建自提点登录账号</a></li>
                 </ul>
             </li>
 
@@ -47,6 +49,7 @@
 
             <li><a><i class="fa fa-clone"></i>订单模板 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
+                    <li><a th:href="@{/print/print_order}">订单打印</a></li>
                 </ul>
             </li>
         </ul>
