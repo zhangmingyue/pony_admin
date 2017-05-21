@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.ProductDAO">
+
+    <sql id="ProductColumnList">
+        p.id as id,
+        p.product_name as productName,
+        p.product_number as productNumber,
+        p.reservation_id as reservationId,
+        p.product_icon_url as productIconUrl,
+        p.weight as weight,
+        p.product_width as productWidth,
+        p.product_length as productLength,
+        p.product_high as productHigh,
+        p.promotion_type as promotionType,
+        p.promotion_begin_time as promotionBeginTime,
+        p.promotion_end_time as promotionEndTime,
+        p.promotion_number as promotionNumber,
+        p.promotion_number_original as promotionNumberOriginal,
+        p.promotion_price as promotionPrice,
+        p.id_restriction_number as idRestrictionNumber,
+        p.credit_score as creditScore,
+        p.category_code_one as categoryCodeOne,
+        p.category_code_two as categoryCodeTwo,
+        p.category_code_three as categoryCodeThree,
+        p.reservation_id as reservationId,
+        reservation_pic_url as reservationPicUrl,
+        reservation_pic_height as reservationPicHeight,
+        reservation_pic_width as reservationPicWidth,
+        p.unit as unit,
+        p.monthly_sales as monthlySales
+
+    </sql>
+
+    <resultMap id="ProductResultMap" type="com.pony_admin.dao.ProductDAO">
+        <id column="id" property="id"/>
+        <result column="product_name" property="productName"/>
+        <result column="product_number" property="productNumber"/>
+        <result column="promotion_price" property="promotionPrice"/>
+        <result column="is_spot" property="isSpot"/>
+        <result column="promotion" property="promotion"/>
+        <result column="product_length" property="length"/>
+        <result column="product_width" property="width"/>
+        <result column="product_high" property="high"/>
+        <result column="product_icon_url" property="productIconUrl"/>
+        <result column="weight" property="weight"/>
+        <result column="promotion_begin_time" property="promotionBeginTime"/>
+        <result column="promotion_end_time" property="promotionEndTime"/>
+        <result column="id_restriction_number" property="idRestrictionNumber"/>
+        <result column="promotion_number" property="promotionNumber"/>
+        <result column="credit_score" property="creditScore"/>
+        <result column="category_code_one" property="categoryCodeOne"/>
+        <result column="category_code_two" property="categoryCodetTwo"/>
+        <result column="category_code_three" property="categoryCodeThree"/>
+        <result column="reservation" property="reservation"/>
+    </resultMap>
+
+    <sql id="getProduction">
+        id, product_name AS productName , product_number AS productNumber,
+        promotion_price AS promotionPrice , is_spot AS isSpot , promotion,
+        product_length AS `length`, product_width as width , product_high AS high ,
+        product_icon_url as productIconUrl , weight AS  weight ,
+        promotion_begin_time as promotionBeginTime ,promotion_end_time AS promotionEndTime,
+        id_restriction_number AS idRestrictionNumber , promotion_number AS promotionNumber,
+        credit_score AS creditScore , category_code_one AS categoryCodeOne,
+        category_code_two AS categoryCodetTwo , category_code_three as categoryCodeThree ,
+        reservation,alert_number AS alertNumber
+    </sql>
+
+    <insert id="insert" parameterType="com.pony_admin.domain.ProductEntity">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO
+        `product`(
+        `product_name`,`product_number`,`promotion_price`,
+        `is_spot`,`promotion`,`product_length`,`product_width`,`product_high`,
+        `product_icon_url`,`weight`,`promotion_begin_time`,
+        `promotion_end_time`,`id_restriction_number`,`promotion_number`,
+        `credit_score`,`category_code_one`,`category_code_two`,
+        `category_code_three`,`reservation`,`alert_number`,`unit`
+        )VALUES(
+        #{productName} , #{productNumber} , #{promotionPrice},
+        #{isSpot} , #{promotion} , #{length},#{width},#{high},
+        #{productIconUrl} , #{weight} , #{promotionBeginTime},
+        #{promotionEndTime},#{idRestrictionNumber},#{promotionNumber},
+        #{creditScore},#{categoryCodeOne},#{categoryCodetTwo},
+        #{categoryCodeThree},#{reservation},#{alertNumber},#{unit}
+        )
+    </insert>
+
+    <update id="updateProductId" parameterType="map">
+        update product set product_number=#{product_number} WHERE id=#{id}
+    </update>
+
+    <select id="selectProductReservation" parameterType="com.pony_admin.domain.ProductEntity">
+        SELECT  <include refid="ProductColumnList"/> from product where  GROUP BY id
+    </select>
+</mapper>

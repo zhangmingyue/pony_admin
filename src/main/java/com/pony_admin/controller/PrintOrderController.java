@@ -21,6 +21,7 @@ public class PrintOrderController {
     public String getAdminPage(Model model,
                                HttpServletRequest request,
                                HttpServletResponse response) {
+        String orderId = request.getParameter("orderId");
         return "print_order";
     }
 }

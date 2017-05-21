@@ -25,7 +25,9 @@
         }
     </style>
     <style type="text/css" media="print">
-        .noprint { display:none;}
+        .noprint {
+            display: none;
+        }
     </style>
 </head>
 
@@ -45,103 +47,128 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="x_panel">
+                            <div class="x_content">
+                                <form class="form-horizontal" role="form" id="category_form"
+                                      th:action="@{/print/print_order}" th:method="get">
+                                    <div class="form-group">
 
-                            <section class="content invoice">
-                                <!-- title row -->
-                                <div class="row">
-                                    <div class="col-xs-12 invoice-header">
-                                        <img src="/static/pic/webwxgetmsgimg.jpeg"
-                                             th:attr="src=@{/pic/logo.jpg}" alt=""/>
-                                        <div class="pull-right">
-                                            <div class="col-xs-12 invoice-header">
-                                                <div id="barcodeTarget" class="barcodeTarget"></div>
-                                                <canvas id="canvasTarget" width="150" height="150"></canvas>
-                                            </div>
+                                        <label class="control-label col-sm-2 noprint">订单编号：</label>
+
+                                        <div class="controls col-sm-3 noprint">
+                                            <input type="text" class="form-control noprint" placeholder="请输入订单编号"
+                                                   id="orderId" name="orderId"/>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="category_form" class="btn btn-success noprint">添加类目
+                                            </button>
+                                            <button type="reset" class="btn btn-default noprint">重置</button>
                                         </div>
                                     </div>
 
-                                </div>
 
-                                <!-- info row -->
-                                <div class="row invoice-info">
-                                    <div class="col-sm-4 invoice-col">
-                                        <h4>
-                                            <strong>收货人: 乔译
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                联系电话: 17600805471 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                自提时间: 2017-05-10 </strong>
-                                            <br/>
-                                            <br/>自提地址: 北京市 望京区 高大上 19号
+                                    <section class="content invoice">
+                                        <!-- title row -->
+                                        <div class="row">
+                                            <div class="col-xs-12 invoice-header">
+                                                <img src="/static/pic/webwxgetmsgimg.jpeg"
+                                                     th:attr="src=@{/pic/logo.jpg}" alt=""/>
+                                                <div class="pull-right">
+                                                    <div class="col-xs-12 invoice-header">
+                                                        <div id="barcodeTarget" class="barcodeTarget"></div>
+                                                        <canvas id="canvasTarget" width="150" height="150"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                        </h4>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
+                                        </div>
 
-                                <!-- Table row -->
-                                <div class="row">
-                                    <div class="col-xs-13 table">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>商品名称</th>
-                                                <th>数量</th>
-                                                <th>单价</th>
-                                                <th>总计</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>商品1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>商品2</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>商品3</td>
-                                                <td>3</td>
-                                                <td>1</td>
-                                                <td>3</td>
-                                            </tr>
-                                            <tr>
-                                                <td>商品4</td>
-                                                <td>4</td>
-                                                <td>1</td>
-                                                <td>4</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.col -->
-                                </div>
-                                <!-- /.row -->
+                                        <!-- info row -->
+                                        <div class="row invoice-info">
+                                            <div class="col-sm-4 invoice-col">
+                                                <h4>
+                                                    <strong>收货人: 乔译
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        联系电话: 17600805471 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        自提时间: 2017-05-10 </strong>
+                                                    <br/>
+                                                    <br/>自提地址: 北京市 望京区 高大上 19号
 
-                                <div class="row">
-                                    <!-- accepted payments column -->
-                                    <div class="col-xs-6">
-                                        <img src="/static/pic/webwxgetmsgimg.jpeg"
-                                             th:attr="src=@{/pic/binarycode.jpg}" alt=""/>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <!-- /.row -->
 
-                                <!-- this row will not appear when printing -->
-                                <div class="row no-print">
-                                    <div class="col-xs-12">
-                                        <button class="btn btn-default noprint" onclick="window.print();"><i class="fa fa-print"></i>
-                                            打印
-                                        </button>
-                                    </div>
-                                </div>
-                            </section>
+                                        <!-- Table row -->
+                                        <div class="row">
+                                            <div class="col-xs-13 table">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>商品名称</th>
+                                                        <th>数量</th>
+                                                        <th>单价</th>
+                                                        <th>总计</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>商品1</td>
+                                                        <td>1</td>
+                                                        <td>1</td>
+                                                        <td>1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>商品2</td>
+                                                        <td>2</td>
+                                                        <td>1</td>
+                                                        <td>2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>商品3</td>
+                                                        <td>3</td>
+                                                        <td>1</td>
+                                                        <td>3</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>商品4</td>
+                                                        <td>4</td>
+                                                        <td>1</td>
+                                                        <td>4</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <!-- /.row -->
+
+                                        <div class="row">
+                                            <!-- accepted payments column -->
+                                            <div class="col-xs-6">
+                                                <img src="/static/pic/webwxgetmsgimg.jpeg"
+                                                     th:attr="src=@{/pic/binarycode.jpg}" alt=""/>
+                                            </div>
+                                        </div>
+                                        <!-- /.row -->
+
+                                        <!-- this row will not appear when printing -->
+                                        <div class="row no-print">
+                                            <div class="col-xs-12">
+                                                <button class="btn btn-default noprint" onclick="window.print();"><i
+                                                        class="fa fa-print"></i>
+                                                    打印
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </section>
 
 
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,18 +192,18 @@
 <script th:src="@{/barcode/jquery-barcode.js}"></script>
 <script type="text/javascript">
 
-    function generateBarcode(){
+    function generateBarcode() {
         var value = "123456789";
         var btype = "std25";
         var renderer = "svg";
 
         var quietZone = false;
-        if ($("#quietzone").is(':checked') || $("#quietzone").attr('checked')){
+        if ($("#quietzone").is(':checked') || $("#quietzone").attr('checked')) {
             quietZone = true;
         }
 
         var settings = {
-            output:renderer,
+            output: renderer,
             bgColor: $("#bgColor").val(),
             color: $("#color").val(),
             barWidth: $("#barWidth").val(),
@@ -186,10 +213,10 @@
             posY: $("#posY").val(),
             addQuietZone: $("#quietZoneSize").val()
         };
-        if ($("#rectangular").is(':checked') || $("#rectangular").attr('checked')){
-            value = {code:value, rect: true};
+        if ($("#rectangular").is(':checked') || $("#rectangular").attr('checked')) {
+            value = {code: value, rect: true};
         }
-        if (renderer == 'canvas'){
+        if (renderer == 'canvas') {
             clearCanvas();
             $("#barcodeTarget").hide();
             $("#canvasTarget").show().barcode(value, btype, settings);
@@ -199,32 +226,32 @@
         }
     }
 
-    function showConfig1D(){
+    function showConfig1D() {
         $('.config .barcode1D').show();
         $('.config .barcode2D').hide();
     }
 
-    function showConfig2D(){
+    function showConfig2D() {
         $('.config .barcode1D').hide();
         $('.config .barcode2D').show();
     }
 
-    function clearCanvas(){
+    function clearCanvas() {
         var canvas = $('#canvasTarget').get(0);
         var ctx = canvas.getContext('2d');
         ctx.lineWidth = 1;
         ctx.lineCap = 'butt';
         ctx.fillStyle = '#FFFFFF';
-        ctx.strokeStyle  = '#000000';
-        ctx.clearRect (0, 0, canvas.width, canvas.height);
-        ctx.strokeRect (0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#000000';
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
     }
 
-    $(function(){
-        $('input[name=btype]').click(function(){
+    $(function () {
+        $('input[name=btype]').click(function () {
             if ($(this).attr('id') == 'datamatrix') showConfig2D(); else showConfig1D();
         });
-        $('input[name=renderer]').click(function(){
+        $('input[name=renderer]').click(function () {
             if ($(this).attr('id') == 'canvas') $('#miscCanvas').show(); else $('#miscCanvas').hide();
         });
         generateBarcode();
