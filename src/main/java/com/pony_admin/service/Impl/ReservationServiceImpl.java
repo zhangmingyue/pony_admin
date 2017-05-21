@@ -27,4 +27,13 @@ public class ReservationServiceImpl implements ReservationService {
     public List<ReservationEntity> getAllReservationName() {
         return reservationDAO.getAllReservationList();
     }
+    /**
+     * 根据ID获取预约信息
+     *
+     * @param reservationId
+     * @return ReservationEntity
+     */
+    public ReservationEntity getReservationEntityById(Integer reservationId){
+        return reservationDAO.getReservationEntityById(reservationId);
+    }
 }

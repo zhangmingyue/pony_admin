@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Dropzone.js -->
+    <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+    <!--validator-->
+    <link th:href="@{/js/validator.min.js}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title">
+                        <i class="fa fa-paw"></i>
+                        <span>小马自提管理后台</span>
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>产品分类修改</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <form class="form-horizontal" role="form" id="custom_form"
+                                      th:action="@{/ProductType/productTypeEdit}" th:method="post" enctype ="multipart/form-data">
+                                    <input type="hidden" th:value="${productType.id}" id ="id" name="id"/>
+                                    <input type="hidden" th:value="${productType.parentId}" id ="parentId" name="parentId"/>
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">分类等级：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <h4 th:switch="${productType.typeLevel}">
+                                                <p th:case="1">一级分类</p>
+                                                <p th:case="2">二级分类</p>
+                                                <p th:case="3">三级分类</p>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">产品分类名称：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入产品分类名称"
+                                                   id="productTypeName" th:value="${productType.productTypeName}" name="productTypeName" required="required"/>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">产品分类图片：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <img id="pictureShow" th:src="${productType.productTypeIconUrl}"  width="100px" />
+                                            <input type="hidden"
+                                                   id="advertisementPictureUrl" th:value="${productType.productTypeIconUrl}" name="advertisementPictureUrl"/>
+                                        </div>
+                                    </div>
+
+                                    <div id="productTypeIconDiv" class="form-group">
+                                        <label class="control-label col-sm-2">新分类图片：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="file" class="form-control" id="productTypeIcon" name="productTypeIcon"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="custom_form" class="btn btn-success">修改产品分类
+                                            </button>
+                                            <button type="reset" class="btn btn-default">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+
+
+                            <div class="col-md-9 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>下属产品</h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr >
+                                                <th>序号</th>
+                                                <th>产品编号</th>
+                                                <th>产品名称</th>
+                                                <th>产品图片</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr  th:each="product,iterStat : ${productEntityList}" th:class="${iterStat.odd}? 'odd'">
+                                                <th scope="row" th:text="${iterStat.count}" ></th>productNumber
+                                                <th scope="row" th:text="${product.productNumber}" ></th>
+                                                <th scope="row" th:text="${product.productName}" ></th>
+                                                <td ><img  th:src="${product.productIconUrl}"  width="100px" /></td>
+
+                                                <td><a  th:href="@{/ProductType/deleteProductToProductType(productId=${product.id},productTypeId=${productType.id})}">删除</a></td>
+                                            </tr>
+                                            <tr >
+                                                <form id="product_type_product_form" th:action="@{/ProductType/addProductToProductType}" th:method="get" >
+                                                    <th ><input type="hidden" id="productTypeId" th:value="${productType.id}" name="productTypeId"/>
+                                                        <input type="hidden" id="product_type_productId" name="productId"/></th>
+                                                    <td >
+                                                        <input type="text" class="form-control" onchange="checkProductNumber();" id="product_type_productNumber"
+                                                               required="required"/>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <div id="productNumberRight" type="hiden">
+                                                            <img th:src="@{/image/right_icon.jpg}"/>
+                                                            <span>产品编码正确</span>
+                                                        </div>
+
+                                                        <div id="productNumberWrong" type="hiden">
+                                                            <img th:src="@{/image/wrong_icon.jpg}"/>
+                                                            <span>产品编码错误</span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <button type="submit" form="product_type_product_form" class="btn btn-success">添加</button>
+                                                    </td>
+                                                </form>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:include="foot::foot"></div>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/bootstrap-editable/bootstrap-editable.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- Dropzone.js -->
+<script th:src="@{/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            minView: 2,
+            maxView: 2,
+            autoclose: true,
+            todayBtn: true,
+            todayHighlight: true,
+            language: 'zh-CN',
+            viewSelect: 'month',
+            pickTime: true
+        });
+
+        $('#productNumberRight').hide();
+        $('#productNumberWrong').hide();
+
+        $('#typeLevelOne').hide();
+        $('#typeLevelTwo').hide();
+        $('#productTypeIcon').hide();
+        $('#productTypeIcon').val('');
+        $('#parentId').val(0);
+        $('#productTypeIconDiv').hide();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sysmsg-error").click(function () {
+            $(this).hide();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script type="text/javascript">
+
+    $("#typeLevel").on("change", function (e) {
+        var typeLevel = $(e.target).val();
+        if(typeLevel==1){
+            $('#typeLevelOne').hide();
+            $('#typeLevelTwo').hide();
+            $('#productTypeIcon').hide();
+            $('#productTypeIcon').val(null);
+
+            $('#parentId').val(0);
+            $('#productTypeIconDiv').hide();
+        }
+        if(typeLevel==2){
+            $('#typeLevelOne').show();
+            $('#typeLevelTwo').hide();
+            $('#productTypeIcon').hide();
+            $('#productTypeIcon').val(null);
+
+            $('#productTypeIconDiv').hide();
+        }
+        if(typeLevel==3){
+            $('#typeLevelOne').show();
+            $('#typeLevelTwo').show();
+            $('#productTypeIcon').show();
+            $('#productTypeIconDiv').show();
+        }
+    });
+
+    $("#typeLevelOne").on("change", function (e) {
+        $("#typeLevelTwo").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+        var parentId = $(e.target).val();
+        $('#parentId').val(parentId);
+        console.log(parentId);
+
+        $.ajax({
+            type: 'POST',
+            url: "/ProductType/getProductTypeByParentId/" + parentId,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var orgModelList = data.orgModelList;
+
+                var orgFrameEle = document.createDocumentFragment();
+
+                /*<![CDATA[*/
+                for (var i = 0, len = orgModelList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = orgModelList[i].id;
+//                    tmpOptionEle.setAttribute("parentId", orgModelList[i].parent);
+                    tmpOptionEle.innerHTML = orgModelList[i].productTypeName;
+                    orgFrameEle.appendChild(tmpOptionEle);
+                }
+                /*]]>*/
+
+                $("#typeLevelTwo").append(orgFrameEle);
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+
+    });
+
+    $("#typeLevelTwo").on("change", function (e) {
+        $("#categoryCodeThree").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+        var parentId = $(e.target).val();
+        console.log(parentId);
+        if (parentId == -1) {
+            return;
+        }
+        $('#parentId').val(parentId);
+
+    });
+    function checkProductNumber(){
+        var productNumber = $('#product_type_productNumber').val();
+        $.ajax({
+            type: 'POST',
+            url: "/Advertisement/checkProductNumber?productNumber=" + productNumber,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var productEntity = data["productEntity"];
+
+                if(productEntity != null){
+                    $('#productNumberRight').show();
+                    $('#productNumberWrong').hide();
+                    $('#product_type_productId').val(productEntity.id);
+                }else{
+                    $('#productNumberRight').hide();
+                    $('#productNumberWrong').show();
+                    $('#product_type_productId').val('');
+                }
+
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+    }
+</script>
+
+
+</body>
+</html>
+</html>

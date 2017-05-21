@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.ProductPictureDAO">
+
+    <insert id="insert" parameterType="com.pony_admin.Product.entity.ProductPictureEntity">
+        <selectKey resultType="int" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `product_picture`(
+        `product_picture_url`,
+        `coverpicture`,
+        `product_id`
+        )VALUES (
+        #{productPictureUrl},
+        #{coverpicture},
+        #{productId}
+        )
+    </insert>
+
+    <!--根据产品图片id删除产品图片 -->
+    <delete id="deleteProductPictureById" parameterType="java.lang.Integer">
+        delete from product_picture where id = #{productPictureId}
+    </delete>
+    <!--根据产品ID获取产品图片列表-->
+    <select id="getProductPictureEntityListByProductId" parameterType="java.lang.Integer" resultType="com.pony_admin.Product.entity.ProductPictureEntity">
+        SELECT id as id,
+        `product_picture_url` as productPictureUrl,
+        `coverpicture` as coverpicture,
+        `product_id` as productId
+        FROM product_picture
+        where product_id = #{productId}
+    </select>
+</mapper>

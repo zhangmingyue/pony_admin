@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Dropzone.js -->
+    <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+    <!--validator-->
+    <link th:href="@{/js/validator.min.js}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title">
+                        <i class="fa fa-paw"></i>
+                        <span>小马自提管理后台</span>
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>商品修改</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <form class="form-horizontal" role="form" id="custom_form"
+                                      th:action="@{/product/productEdit}" th:method="post" enctype ="multipart/form-data">
+                                    <input type="hidden" id="id" th:value="${productEntity.id}" name="id"/>
+                                    <input type="hidden" id="productNumber" th:value="${productEntity.productNumber}" name="productNumber"/>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">类目类型：</label>
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control "
+                                                    id="categoryCodeOne"
+                                                    name="categoryCodeOne">
+                                                <option th:value="${categoryEntityOne.id}" th:text="${categoryEntityOne.name}"></option>
+                                                <option th:each="var:${categoryOneEntityList}" th:value="${var.id}"
+                                                        th:text="${var.name}" th:org1-parentId="${var.id}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control" id="categoryCodeTwo" name="categoryCodeTwo">
+                                                <option th:value="${categoryEntityTwo.id}" th:text="${categoryEntityTwo.name}"></option>
+                                                <option th:each="var:${categoryTwoEntityList}" th:value="${var.id}"
+                                                        th:text="${var.name}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control" id="categoryCodeThree" name="categoryCodeThree">
+                                                <option th:value="${categoryEntityThree.id}" th:text="${categoryEntityThree.name}"></option>
+                                                <option th:each="var:${categoryThreeEntityList}" th:value="${var.id}"
+                                                        th:text="${var.name}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">预约类型：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control "
+                                                    id="reservationId"
+                                                    name="reservationId">
+                                                <option th:value="${myReservationEntity.id}" th:text="${myReservationEntity.name}"></option>
+                                                <option th:each="var:${reservationEntityList}" th:value="${var.id}"
+                                                        th:text="${var.name}">
+                                                    ${var.name}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品名称：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入商品名称"
+                                                   id="productName" th:value="${productEntity.productName}" name="productName" required="required"/>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品尺寸：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="长"
+                                                   id="productLength" th:value="${productEntity.productLength}" name="productLength" required="required"/>
+                                        </div>
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="宽"
+                                                   id="productWidth" name="productWidth" th:value="${productEntity.productWidth}" required="required"/>
+                                        </div>
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="高"
+                                                   id="productHigh" th:value="${productEntity.productHigh}" name="productHigh" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">最低预警库存量：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入最低预警库存量"
+                                                   id="alertNumber" th:value="${productEntity.alertNumber}" name="alertNumber" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品权重：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入商品权重"
+                                                   id="weight" th:value="${productEntity.weight}" name="weight" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">商品单位：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入商品单位"
+                                                   id="unit" th:value="${productEntity.unit}" name="unit" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">主图片：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <img id="productIconShow" th:src="${productEntity.productIconUrl}"  width="100px" height="100px"/>
+                                            <input type="hidden"
+                                                   id="productIconUrl" th:value="${productEntity.productIconUrl}" name="productIconUrl"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">修改主图片：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="file" class="form-control" name="newProductIcon"/>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="custom_form" class="btn btn-success">修改商品
+                                            </button>
+                                            <button type="reset" class="btn btn-default">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+
+
+
+                            <div class="col-md-9 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>商品图片<small>上传数量最好10个以内</small></h2>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr >
+                                                <th>序号</th>
+                                                <th>图片</th>
+                                                <th>是否主图片</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr  th:each="productPicture,iterStat : ${productPictureEntityList}" th:class="${iterStat.odd}? 'odd'">
+                                                <th scope="row" th:text="${iterStat.count}" ></th>
+                                                <td ><img  th:src="${productPicture.productPictureUrl}"  width="100px" /></td>
+                                                <td th:switch="${productPicture.coverpicture}"><p th:case="0">否</p><p th:case="1">是</p></td>
+
+                                                <td><a  th:href="@{/product/productPictureDelete(productId=${productEntity.id},productPictureId=${productPicture.id})}">删除</a></td>
+                                            </tr>
+                                            <tr >
+                                                <form id="product_picture_form" th:action="@{/product/productPictureAdd}" th:method="post" enctype ="multipart/form-data">
+                                                    <th ><input type="hidden" id="productId" th:value="${productEntity.id}" name="productId"/></th>
+                                                    <td >
+                                                        <input type="file" class="form-control" name="productPicture"
+                                                                required="required"/>
+                                                    </td>
+                                                    <td >
+
+                                                        <div class="controls ">
+                                                            <select class="form-control" id="coverpicture" name="coverpicture">
+
+                                                                <option value="0" >否</option>
+                                                                <option value="1" >是</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" form="product_picture_form" class="btn btn-success">添加</button>
+                                                    </td>
+                                                </form>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>商品价格管理</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button"
+                                           aria-expanded="true"><i class="fa fa-wrench"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+
+                                <div class="col-md-9 col-sm-12 col-xs-12">
+                                    <div class="x_panel">
+
+                                        <div class="x_content">
+
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr >
+                                                    <th>序号</th>
+                                                    <th>价格</th>
+                                                    <th>生效日期</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr  th:each="productPrice,iterStat : ${productPriceEntityList}" th:class="${iterStat.odd}? 'odd'">
+                                                    <th scope="row" th:text="${iterStat.count}" ></th>
+                                                    <td th:text="${productPrice.price}"></td>
+                                                    <td th:text="${#dates.format(productPrice.enableDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+                                                    <td><a  th:href="@{/product/productPriceDelete(productId=${productEntity.id},productPriceId=${productPrice.id})}">删除</a></td>
+                                                </tr>
+                                                <tr >
+                                                    <form id="product_price_form" th:action="@{/product/productPriceAdd}" th:method="post" enctype ="multipart/form-data">
+                                                        <th ><input type="hidden" th:value="${productEntity.id}" name="productId"/></th>
+                                                        <td >
+                                                            <input type="text"  name="price" required="required"/>
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control dtpicker form_datetime"
+                                                                   id="enableDate" name="enableDate" placeholder="生效日期" />
+
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" form="product_price_form" class="btn btn-success">添加</button>
+                                                        </td>
+                                                    </form>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                    </div>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>商品促销信息管理</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button"
+                                           aria-expanded="true"><i class="fa fa-wrench"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+
+                                <form class="form-horizontal" role="form" id="product_promotion_form"
+                                      th:action="@{/product/productPromotionEdit}" th:method="post">
+                                    <input type="hidden" id="id" th:value="${productEntity.id}" name="id"/>
+                                    <input type="hidden" id="productNumber" th:value="${productEntity.productNumber}" name="productNumber"/>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">促销类型：</label>
+                                        <div class="controls col-sm-2">
+                                            <select class="form-control "
+                                                    id="promotionType"
+                                                    name="promotionType">
+                                                <option th:switch="${productEntity.promotionType}" th:value="${productEntity.promotionType}"><p th:case="0">非促销</p><p th:case="1">排队抢</p><p th:case="2">信用福利</p></option>
+                                                <option value="0">非促销</option>
+                                                <option value="1">排队抢</option>
+                                                <option value="2">信用福利</option>
+                                            </select>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="control-label col-sm-2">促销价格：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control" placeholder="请输入促销价格"
+                                                   id="promotionPrice" th:value="${productEntity.promotionPrice}" name="promotionPrice" required="required"/>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">促销开始时间：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control dtpicker form_datetime"
+                                                   id="promotionBeginTime" name="promotionBeginTime" th:value="${#dates.format(productEntity.promotionBeginTime, 'yyyy-MM-dd HH:mm:ss')}" placeholder="开始时间" />
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">促销结束时间：</label>
+
+                                        <div class="controls col-sm-2">
+                                            <input type="text" class="form-control dtpicker form_datetime"
+                                                   id="promotionEndTime" name="promotionEndTime" th:value="${#dates.format(productEntity.promotionEndTime, 'yyyy-MM-dd HH:mm:ss')}" placeholder="开始时间" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">参与促销数量：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入参与促销数量"
+                                                   id="promotionNumber" th:value="${productEntity.promotionNumber}" name="promotionNumber" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ID限购数量：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入ID限购数量"
+                                                   id="idRestrictionNumber" th:value="${productEntity.idRestrictionNumber}" name="idRestrictionNumber" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">最低信用分数：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请输入最低信用分数"
+                                                   id="creditScore" th:value="${productEntity.creditScore}" name="creditScore" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="product_promotion_form" class="btn btn-success">修改促销
+                                            </button>
+                                            <button type="reset" class="btn btn-default">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:include="foot::foot"></div>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/bootstrap-editable/bootstrap-editable.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- Dropzone.js -->
+<script th:src="@{/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            minView: 2,
+            maxView: 2,
+            autoclose: true,
+            todayBtn: true,
+            todayHighlight: true,
+            language: 'zh-CN',
+            viewSelect: 'month',
+            pickTime: true
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sysmsg-error").click(function () {
+            $(this).hide();
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script type="text/javascript">
+    $("#categoryCodeOne").on("change", function (e) {
+        $("#categoryCodeTwo").html('<option value="-1" org1-parentId="-1">请选择</option>');
+        $("#categoryCodeThree").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+        var parentId = $(e.target).val();
+        console.log(parentId);
+
+        $.ajax({
+            type: 'POST',
+            url: "/category/get_by_parent/" + parentId,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var orgModelList = data.orgModelList;
+
+                var orgFrameEle = document.createDocumentFragment();
+
+                /*<![CDATA[*/
+                for (var i = 0, len = orgModelList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = orgModelList[i].id;
+                    tmpOptionEle.setAttribute("parentId", orgModelList[i].parent);
+                    tmpOptionEle.innerHTML = orgModelList[i].name;
+                    orgFrameEle.appendChild(tmpOptionEle);
+                }
+                /*]]>*/
+
+                $("#categoryCodeTwo").append(orgFrameEle);
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+
+    });
+
+    $("#categoryCodeTwo").on("change", function (e) {
+        $("#categoryCodeThree").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+        var parentId = $(e.target).val();
+        console.log(parentId);
+        if (parentId == -1) {
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "/category/get_by_parent/" + parentId,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var orgModelList = data.orgModelList;
+                var orgFrameEle = document.createDocumentFragment();
+                /*<![CDATA[*/
+                for (var i = 0, len = orgModelList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = orgModelList[i].id;
+                    tmpOptionEle.innerHTML = orgModelList[i].name;
+                    orgFrameEle.appendChild(tmpOptionEle);
+                }
+                /*]]>*/
+                $("#categoryCodeThree").append(orgFrameEle);
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+    });
+
+</script>
+
+<script type="application/javascript">
+    $(document).ready((function () {
+//                $.fn.editable.defaults.mode = 'inline';
+                $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
+                $('#product_type');
+                $('#reservation_type');
+                $('#title');
+                $('#price');
+                $('#tomorrow_price');
+                $('#length');
+                $('#width');
+                $('#height');
+                $('#unit');
+                $('#low');
+                $('#privilege');
+                $('#main_pic');
+
+//                $('#custom_form').submit(function (e) {
+//
+//                    var formData = new FormData($(this)[0]);
+//                    console.log(formData);
+//                    e.preventDefault();
+//                    $.ajax({
+//                        url: "/custom/input",
+//                        type: 'POST',
+//                        data: formData,
+//                        contentType: false,
+//                        processData: false,
+//                        success: function (data) {
+//                            if (data["result"] == true) {
+//                                location.reload();
+//                                alert(data["msg"]);
+//                                window.location.reload();
+//                            } else {
+//                                alert(data["msg"]);
+//                            }
+//                        }
+//                    });
+//                });
+            })
+    );
+</script>
+</body>
+</html>
+</html>

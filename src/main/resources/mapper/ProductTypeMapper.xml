@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.ProductTypeDAO">
+
+    <!--根据查询条件获取广告列表 &lt; &gt;-->
+    <select id="getAdvertisementList" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.QueryBean.AdvertisementQueryBean" resultType="com.pony_admin.AdvertisementAndSpecial.entity.Advertisement">
+
+        SELECT <include refid="ProductTypeColumnList"/>
+        FROM  product_type
+        where parent_id = #{parentId}
+
+
+    </select>
+
+    <!--根据产品分类ID获取产品分类-->
+    <select id="getProductTypeByProductTypeId" parameterType="java.lang.Integer" resultType="com.pony_admin.ProductType.entity.ProductType">
+
+        SELECT <include refid="ProductTypeColumnList"/>
+        FROM `product_type`
+        WHERE id = #{productTypeId}
+
+    </select>
+
+    <!--添加产品分类-->
+    <insert id="insertProductType" parameterType="com.pony_admin.ProductType.entity.ProductType">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `product_type`
+                    (`product_type_name`,
+                     `parent_id`,
+                     `product_type_icon_url`
+                    )VALUES(
+                     #{productTypeName},
+                     #{parentId},
+                     #{productTypeIconUrl})
+
+    </insert>
+
+
+    <!--修改产品分类-->
+    <update id="updateProductType" parameterType="com.pony_admin.ProductType.entity.ProductType">
+
+        update product_type
+           set product_type_name = #{productTypeName},
+               product_type_icon_url = #{productTypeIconUrl}
+         WHERE id=#{id}
+
+    </update>
+
+
+    <!--删除产品分类-->
+    <delete id="deleteProductType"  parameterType="com.pony_admin.ProductType.entity.ProductType">
+
+        delete from product_type
+              where id = #{id}
+
+    </delete>
+
+    <!--根据产品分类名称获取分类链表-->
+    <select id="getProductTypeListByQuerybean" parameterType="com.pony_admin.ProductType.entity.ProductTypeQueryBean" resultType="com.pony_admin.ProductType.entity.ProductType">
+
+        SELECT <include refid="ProductTypeColumnList"/>
+        FROM `product_type`
+        WHERE product_type_name like '%${productTypeName}%'
+        <if test="typeLevel > 0">
+            and type_level=#{typeLevel}
+        </if>
+
+    </select>
+    <!--根据产品分类名称获取分类链表-->
+    <select id="getChildProductTypeListByProductTypeId" parameterType="java.lang.Integer" resultType="com.pony_admin.ProductType.entity.ProductType">
+
+        SELECT <include refid="ProductTypeColumnList"/>
+        FROM `product_type`
+        WHERE parent_id = #{productTypeId}
+
+    </select>
+
+    <!--根据查询分类ID获取产品列表-->
+    <select id="getProductEntityListByProductTypeId" parameterType="java.lang.Integer" resultType="com.pony_admin.Product.entity.ProductEntity">
+        SELECT <include refid="ProductColumnList"/>
+        FROM  product_to_product_type as ptpt
+        left join product as p
+        on ptpt.product_id = p.id
+
+        where ptpt.product_type_id = #{productTypeId}
+
+    </select>
+
+
+    <!--添加产品-->
+    <insert id="addProductToProductType" parameterType="java.lang.Integer">
+
+        INSERT INTO `product_to_product_type`
+        (`product_type_id`,
+        `product_id`
+        )VALUES(
+        #{productTypeId},
+        #{productId})
+
+    </insert>
+    <!--删除产品-->
+    <delete id="deleteProductToProductType"  parameterType="java.lang.Integer">
+
+        delete from product_to_product_type
+        where product_type_id = #{productTypeId} AND
+              product_id = #{productId}
+
+    </delete>
+
+
+
+
+    <!--resultMap and sql-->
+
+    <sql id="ProductTypeColumnList">
+
+        id as id,
+        product_type_name as productTypeName,
+        parent_id as parentId,
+        product_type_icon_url as productTypeIconUrl,
+        type_level as typeLevel
+    </sql>
+
+    <sql id="ProductColumnList">
+        p.id as id,
+        p.product_name as productName,
+        p.product_number as productNumber,
+        p.reservation_id as reservationId,
+        p.product_icon_url as productIconUrl,
+        p.weight as weight,
+        p.product_width as productWidth,
+        p.product_length as productLength,
+        p.product_high as productHigh,
+        p.promotion_type as promotionType,
+        p.promotion_begin_time as promotionBeginTime,
+        p.promotion_end_time as promotionEndTime,
+        p.promotion_number as promotionNumber,
+        p.promotion_price as promotionPrice,
+        p.id_restriction_number as idRestrictionNumber,
+        p.credit_score as creditScore,
+        p.category_code_one as categoryCodeOne,
+        p.category_code_two as categoryCodeTwo,
+        p.category_code_three as categoryCodeThree,
+        p.reservation_id as reservationId,
+        reservation_pic_url as reservationPicUrl,
+        reservation_pic_height as reservationPicHeight,
+        reservation_pic_width as reservationPicWidth,
+        p.unit as unit,
+        p.monthly_sales as monthlySales,
+        p.promotion_number_original as promotionNumberOriginal
+
+    </sql>
+
+</mapper>

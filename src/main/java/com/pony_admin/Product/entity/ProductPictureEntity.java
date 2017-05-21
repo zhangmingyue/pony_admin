@@ -1,4 +1,4 @@
-package com.pony_admin.domain;
+package com.pony_admin.Product.entity;
 
 /**
  * @author: qiaoyi
@@ -27,12 +27,20 @@ public class ProductPictureEntity {
         this.productPictureUrl = productPictureUrl;
     }
 
-    public int getCoverPicture() {
+    public int getCoverpicture() {
         return coverpicture;
     }
 
-    public void setCoverPicture(int coverPicture) {
-        this.coverpicture = coverPicture;
+    public void setCoverpicture(int coverpicture) {
+        this.coverpicture = coverpicture;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getProduct_id() {

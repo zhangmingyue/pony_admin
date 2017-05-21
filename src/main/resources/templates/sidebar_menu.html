@@ -10,9 +10,10 @@
             </li>
             <li><a><i class="fa fa-edit"></i> 商品 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a th:href="@{/custom/list}">商品列表</a></li>
-                    <li><a th:href="@{/custom}">商品发布</a></li>
+                    <li><a th:href="@{/product/productList}">商品列表</a></li>
+                    <li><a th:href="@{/product/toProductInsertPage}">商品发布</a></li>
                     <li><a th:href="@{/category}">类目添加</a></li>
+                    <li><a th:href="@{/ProductType/toProductTypeManage}">分类管理</a></li>
                     <li><a th:href="@{/reservation}">预约类型添加</a></li>
                 </ul>
             </li>
@@ -52,18 +53,36 @@
                     <li><a th:href="@{/print/print_order}">订单打印</a></li>
                 </ul>
             </li>
+            <li><a><i class="fa fa-clone"></i>广告管理<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{/Advertisement/advertisementList}">广告列表</a></li>
+                    <li><a th:href="@{/Advertisement/addAdvertisementPage}">广告发布</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-clone"></i>专题管理<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{/Special/specialList}">专题列表</a></li>
+                    <li><a th:href="@{/Special/toAddSpecialPage}">专题发布</a></li>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-clone"></i>产品分类管理<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a th:href="@{/ProductType/toProductTypeListPage}">产品分类列表</a></li>
+                    <li><a th:href="@{/ProductType/toProductTypeAddPage}">产品分类添加</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
     <!-- jQuery -->
-    <script th:src="@{vendors/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
     <!-- Bootstrap -->
-    <script th:src="@{vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
     <!-- FastClick -->
-    <script th:src="@{vendors/fastclick/lib/fastclick.js}"></script>
+    <script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
     <!-- NProgress -->
-    <script th:src="@{vendors/nprogress/nprogress.js}"></script>
+    <script th:src="@{/vendors/nprogress/nprogress.js}"></script>
     <!-- Custom Theme Scripts -->
-    <script th:src="@{build/js/custom.min.js}"></script>
+    <script th:src="@{/build/js/custom.min.js}"></script>
 
 </div>
 </html>

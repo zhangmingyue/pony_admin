@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Dropzone.js -->
+    <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+    <!--validator-->
+    <link th:href="@{/js/validator.min.js}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div th:include="title::title"></div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+                <br/>
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>广告添加
+                                    <small>请注意:一级类目直接添加,二级类目需要选择一级目录后添加,三级目录需要选择二级目录后添加</small>
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="fa-hover col-md-3 col-sm-4 col-xs-12">
+                                <a th:href="@{/Advertisement/addAdvertisementPage}"><i class="fa fa-arrow-left"></i>返回继续添加</a>
+                            </div>
+                            <div class="x_content">
+
+                                <form class="form-horizontal" role="form" id="advertisementForm"
+                                      th:action="@{/Advertisement/updateAdvertisement}" th:method="post" enctype ="multipart/form-data">
+                                    <input type="hidden" th:value="${advertisement.id}" name="id" />
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">广告名称：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入广告名称"
+                                                   id="advertisementName" th:value="${advertisement.advertisementName}" name="advertisementName"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">开始时间：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control dtpicker form_datetime"
+                                                   id="beginTimePage" th:value="${advertisement.beginTime}" name="beginTimePage" placeholder="开始时间" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">结束时间：</label>
+
+                                       <div class="controls col-sm-3">
+                                            <input type="text" class="form-control dtpicker form_datetime"
+                                                   id="endTimePage" th:value="${advertisement.endTime}" name="endTimePage" placeholder="结束时间" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">广告权重：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="广告权重"
+                                                   id="weight" th:value="${advertisement.weight}" name="weight"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">产品编码：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input id="productId" th:value="${advertisement.productId}" type="hidden" name="productId"/>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" th:value="${advertisement.productEntity.productNumber}" onchange="checkProductNumber();" class="form-control" placeholder="产品编码"
+                                                        id="productNumber" />
+                                                    </td>
+                                                    <td>
+                                                        <div id="productNumberRight" type="hiden">
+                                                            <img th:src="@{/image/right_icon.jpg}"/>
+                                                            <span>产品编码正确</span>
+                                                        </div>
+
+                                                        <div id="productNumberWrong" type="hiden">
+                                                            <img th:src="@{/image/wrong_icon.jpg}"/>
+                                                            <span>产品编码错误</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">广告图片：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <img id="pictureShow" th:src="${advertisement.advertisementPictureUrl}"  width="100px" />
+                                            <input type="hidden"
+                                                   id="advertisementPictureUrl" th:value="${advertisement.advertisementPictureUrl}" name="advertisementPictureUrl"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">更改图片：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input id="changePictureInput" type="file" class="form-control" name="picTemp"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="advertisementForm" class="btn btn-success">保存修改
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <!--<div id="picture_div" class="form-group">-->
+
+
+                                        <!--<label class="control-label col-sm-2">广告图片URL：</label>-->
+
+                                        <!--<div class="controls col-sm-3">-->
+                                            <!--<input type="text" class="form-control" th:value="${advertisement.title}" placeholder="请输入三级类目名称标题"-->
+                                                   <!--id="advertisementPictureUrl" name="advertisementPictureUrl"/>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:include="foot::foot"></div>
+
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/bootstrap-editable/bootstrap-editable.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- Dropzone.js -->
+<script th:src="@{/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            minView: 2,
+            maxView: 2,
+            autoclose: true,
+            todayBtn: true,
+            todayHighlight: true,
+            language: 'zh-CN',
+            viewSelect: 'month',
+            pickTime: true
+        });
+
+
+        $('#productNumberRight').hide();
+        $('#productNumberWrong').hide();
+
+        var advertisement_id = $('#advertisement_id').val();
+        if(advertisement_id == 0){
+         //   $('#picture_div').css('display','none');
+            $('#picture_div').hide();
+        }
+    });
+    function testHide(){
+        var i=1;
+        alert(i);
+        i++;
+        if(i%2 == 0){
+            $('#picture_div').hide();
+        }else{
+            $('#picture_div').show();
+
+        }
+
+    };
+    function checkProductNumber(){
+        var productNumber = $('#productNumber').val();
+        if (productNumber == null || productNumber == undefined || productNumber == '') {
+            $('#productNumberRight').show();
+            $('#productNumberWrong').hide();
+            $('#productId').val(0);
+            $('#productNumber').val("");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: "/Advertisement/checkProductNumber?productNumber=" + productNumber,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var productEntity = data["productEntity"];
+
+                if(productEntity != null){
+                    $('#productNumberRight').show();
+                    $('#productNumberWrong').hide();
+                    $('#productId').val(productEntity.id);
+                }else{
+                    $('#productNumberRight').hide();
+                    $('#productNumberWrong').show();
+                    $('#productId').val('');
+                }
+
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+    }
+
+    function changePictureShow(){
+
+        var tempPictureURL = $('#changePictureInput').val();
+//        var changePictureInput = document.getElementById('changePictureInput');
+//        var realPath = createObjectURL(changePictureInput);
+//        alert(realPath);
+        $('#pictureShow').attr('src',tempPictureURL);
+
+    }
+//    //获取数据的URL地址
+//    function createObjectURL(blob) {
+//        if (window.URL) {
+//            return window.URL.createObjectURL(blob);
+//        } else if (window.webkitURL) {
+//            return window.webkitURL.createObjectURL(blob);
+//        } else {
+//            return null;
+//        }
+//    }
+//    function getImgURL(node) {
+//
+//        var imgURL = "";
+//        try {
+//            var file = null;
+//            if (node.files &amp;&amp; node.files[0]) {
+//                file = node.files[0];
+//            } else if (node.files &amp;&amp; node.files.item(0)) {
+//                file = node.files.item(0);
+//            }
+//            //Firefox 因安全性问题已无法直接通过input[file].value 获取完整的文件路径
+//            try {
+//                //Firefox7.0
+//                imgURL = file.getAsDataURL();
+//                //alert("//Firefox7.0"+imgRUL);
+//            } catch (e) {
+//                //Firefox8.0以上
+//                imgURL = window.URL.createObjectURL(file);
+//                //alert("//Firefox8.0以上"+imgRUL);
+//            }
+//        } catch (e) {      //这里不知道怎么处理了，如果是遨游的话会报这个异常
+//            //支持html5的浏览器,比如高版本的firefox、chrome、ie10
+//            if (node.files &amp;&amp; node.files[0]) {
+//                var reader = new FileReader();
+//                reader.onload = function (e) {
+//                    imgURL = e.target.result;
+//                };
+//                reader.readAsDataURL(node.files[0]);
+//            }
+//        }
+//    }
+</script>
+</body>
+</html>
+</html>

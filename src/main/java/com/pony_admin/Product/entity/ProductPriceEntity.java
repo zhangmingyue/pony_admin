@@ -1,4 +1,4 @@
-package com.pony_admin.domain;
+package com.pony_admin.Product.entity;
 
 import java.util.Date;
 

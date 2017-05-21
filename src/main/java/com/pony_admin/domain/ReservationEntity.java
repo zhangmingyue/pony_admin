@@ -14,6 +14,36 @@ public class ReservationEntity {
     private String name;
     private String url;
     private Date date;
+    private String reservationPicUrl;
+    private int reservationPicHeight;
+    private int reservationPicWidth;
+
+    //setter and getter
+
+
+    public String getReservationPicUrl() {
+        return reservationPicUrl;
+    }
+
+    public void setReservationPicUrl(String reservationPicUrl) {
+        this.reservationPicUrl = reservationPicUrl;
+    }
+
+    public int getReservationPicHeight() {
+        return reservationPicHeight;
+    }
+
+    public void setReservationPicHeight(int reservationPicHeight) {
+        this.reservationPicHeight = reservationPicHeight;
+    }
+
+    public int getReservationPicWidth() {
+        return reservationPicWidth;
+    }
+
+    public void setReservationPicWidth(int reservationPicWidth) {
+        this.reservationPicWidth = reservationPicWidth;
+    }
 
     public int getId() {
         return id;

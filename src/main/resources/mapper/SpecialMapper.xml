@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.SpecialDAO">
+
+    <!--根据查询条件获取专题列表-->
+    <select id="getSpecialList" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.QueryBean.SpecialQueryBean" resultType="com.pony_admin.AdvertisementAndSpecial.entity.Special">
+        SELECT <include refid="SpecialColumnList"/>
+        FROM `special`
+        <where>
+            <if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
+                begin_time &gt;= DATE_FORMAT('${beginTime}','%Y-%m-%d %H:%i:%S') and
+                begin_time &lt;= DATE_FORMAT('${endTime}','%Y-%m-%d %H:%i:%S')
+            </if>
+            <if test="title !=null and title != '' ">
+                and title like #{title}
+            </if>
+        </where>
+        order by begin_time desc
+        limit 0,10
+    </select>
+
+    <!--根据专题ID获取专题-->
+    <select id="getSpecialBySpecialId" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.QueryBean.SpecialQueryBean" resultType="com.pony_admin.AdvertisementAndSpecial.entity.Special">
+        SELECT <include refid="SpecialColumnList"/>
+        FROM `special`
+        WHERE id = #{specialId}
+    </select>
+
+
+    <!--按专题ID获取文本项列表-->
+    <select id="getSpecialTextItemListBySpecialId" parameterType="java.lang.Integer" resultType="com.pony_admin.AdvertisementAndSpecial.entity.SpecialTextItem">
+        SELECT <include refid="SpecialTextItemColumnList"/>
+        FROM `special_text_item`
+        where special_id = #{specialId}
+        order by text_item_order asc
+    </select>
+
+    <!--按专题ID获取产品列表-->
+    <select id="getProductListBySpecialId" parameterType="java.lang.Integer" resultType="com.pony_admin.Product.entity.ProductEntity">
+        SELECT <include refid="ProductColumnList"/>
+        FROM  special_product as sp
+        left join product as p
+        on sp.product_id = p.id
+
+        where sp.special_id = #{specialId}
+
+    </select>
+
+    <!--添加专题-->
+    <insert id="addSpecial" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.Special">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `special`
+        (`cover_page_url`,
+        `title`,
+        `special_picture_url`,
+        `special_introduction`,
+        `weight`,
+        `cover_page_high`,
+        `editor`,
+        `cover_page_width`,
+        begin_time,
+        end_time
+        )VALUES(
+        #{coverPageUrl},
+        #{title},
+        #{specialPictureUrl},
+        #{specialIntroduction},
+        #{weight},
+        #{coverPageHigh},
+        #{editor},
+        #{coverPageWidth},
+        DATE_FORMAT('${beginTime}','%Y-%m-%d %H:%i:%S'),
+        DATE_FORMAT('${endTime}','%Y-%m-%d %H:%i:%S'))
+
+    </insert>
+
+
+    <!--修改专题-->
+    <update id="updateSpecialBySpecialId" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.Special">
+
+        update special
+        set cover_page_url = #{coverPageUrl},
+        title = #{title},
+        special_picture_url = #{specialPictureUrl},
+        special_introduction = #{specialIntroduction},
+        weight = #{weight},
+        cover_page_high = #{coverPageHigh},
+        editor = #{editor},
+        cover_page_width = #{coverPageWidth}
+        WHERE id=#{id}
+
+    </update>
+
+
+    <!--删除专题-->
+    <delete id="deleteSpecialBySpecialId"  parameterType="java.lang.Integer">
+
+        delete from special
+        where id = #{id}
+
+    </delete>
+
+    <!--添加专题文本项-->
+    <insert id="addSpecialTextItem" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.SpecialTextItem">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `special_text_item`
+        (`text`,
+        `item_picture_url`,
+        `picture_introduction`,
+        text_item_order,
+        `special_id`
+        )VALUES(
+        #{text},
+        #{itemPictureUrl},
+        #{pictureIntroduction},
+        #{textItemOrder},
+        #{specialId})
+
+    </insert>
+
+    <!--修改专题文本项-->
+    <update id="updateSpecialTextItemBySpecialTextItemId" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.SpecialTextItem">
+
+        update special_text_item
+        set text = #{text},
+        item_picture_url = #{itemPictureUrl},
+        picture_introduction = #{pictureIntroduction},
+        special_id = #{specialId}
+        WHERE id=#{id}
+
+    </update>
+
+
+    <!--删除专题文本项-->
+    <delete id="deleteSpecialTextItemBySpecialTextItemId"  parameterType="java.lang.Integer">
+
+        delete from special_text_item
+        where id = #{specialTextItemId}
+
+    </delete>
+
+    <!--添加专题关联产品-->
+    <insert id="addSpecialProduct" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.SpecialProduct">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `special_product`
+        (`special_id`,
+        `product_id`
+        )VALUES(
+        #{specialId},
+        #{productId})
+
+    </insert>
+    <!--删除专题关联产品-->
+    <delete id="deleteSpecialProductBySpecialProductId"  parameterType="java.lang.Integer">
+
+        delete from special_product
+        where id = #{specialProductId}
+
+    </delete>
+    <!--根据产品ID和专题ID删除专题关联产品-->
+    <delete id="deleteSpecialProductBySpecialAndProductId"  parameterType="java.lang.Integer">
+
+        delete from special_product
+        where special_id = #{specialId} AND
+              product_id = #{productId}
+
+    </delete>
+    <!--resultMap and sql-->
+
+
+    <sql id="SpecialColumnList">
+        id as id,
+        cover_page_url as coverPageUrl,
+        title as title,
+        special_picture_url as specialPictureUrl,
+        special_introduction as specialIntroduction,
+        weight as weight,
+        cover_page_high as coverPageHigh,
+        editor as editor,
+        begin_time as beginTime,
+        end_time as endTime,
+        cover_page_width as coverPageWidth
+
+    </sql>
+
+    <sql id="SpecialTextItemColumnList">
+        id as id,
+        text as text,
+        item_picture_url as itemPictureUrl,
+        picture_introduction as pictureIntroduction,
+        text_item_order as textItemOrder,
+        special_id as specialId
+
+    </sql>
+
+    <sql id="ProductColumnList">
+        p.id as id,
+        p.product_name as productName,
+        p.product_number as productNumber,
+        p.reservation_id as reservationId,
+        p.product_icon_url as productIconUrl,
+        p.weight as weight,
+        p.product_width as productWidth,
+        p.product_length as productLength,
+        p.product_high as productHigh,
+        p.promotion_type as promotionType,
+        p.promotion_begin_time as promotionBeginTime,
+        p.promotion_end_time as promotionEndTime,
+        p.promotion_number as promotionNumber,
+        p.promotion_price as promotionPrice,
+        p.id_restriction_number as idRestrictionNumber,
+        p.credit_score as creditScore,
+        p.category_code_one as categoryCodeOne,
+        p.category_code_two as categoryCodeTwo,
+        p.category_code_three as categoryCodeThree,
+        p.reservation_id as reservationId,
+        reservation_pic_url as reservationPicUrl,
+        reservation_pic_height as reservationPicHeight,
+        reservation_pic_width as reservationPicWidth,
+        p.unit as unit,
+        p.monthly_sales as monthlySales,
+        p.promotion_number_original as promotionNumberOriginal
+
+    </sql>
+
+
+
+</mapper>
