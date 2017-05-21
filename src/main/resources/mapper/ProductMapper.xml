@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.ProductDAO">
+
+
+
+    <insert id="insert" parameterType="com.pony_admin.Product.entity.ProductEntity">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO
+        `product`(product_name  ,
+                  product_number  ,
+                  reservation_id  ,
+                  product_icon_url  ,
+                  weight  ,
+                  product_width  ,
+                  product_length  ,
+                  product_high  ,
+                  promotion_type  ,
+                  promotion_begin_time  ,
+                  promotion_end_time  ,
+                  promotion_number  ,
+                  promotion_price  ,
+                  id_restriction_number  ,
+                  credit_score  ,
+                  category_code_one  ,
+                  category_code_two  ,
+                  category_code_three  ,
+                  reservation_pic_url  ,
+                  reservation_pic_height  ,
+                  reservation_pic_width  ,
+                  unit  ,
+                  monthly_sales  ,
+                  promotion_number_original,
+                  entry_time,
+                  alert_number
+        )VALUES(
+                #{productName} ,
+                #{productNumber} ,
+                #{reservationId},
+                #{productIconUrl} ,
+                #{weight} ,
+                #{productWidth},
+                #{productLength},
+                #{productHigh},
+                #{promotionType} ,
+                #{promotionBeginTime} ,
+                #{promotionEndTime},
+                #{promotionNumber},
+                #{promotionPrice},
+                #{idRestrictionNumber},
+                #{creditScore},
+                #{categoryCodeOne},
+                #{categoryCodeTwo},
+                #{categoryCodeThree},
+                #{reservationPicUrl},
+                #{reservationPicHeight},
+                #{reservationPicWidth},
+                #{unit},
+                #{monthlySales},
+                #{promotionNumberOriginal},
+                now(),
+                #{alertNumber}
+        )
+    </insert>
+
+    <update id="updateProductId" parameterType="map">
+        update product set product_number=#{product_number} WHERE id=#{id}
+    </update>
+
+    <!--根据产品ID获取对应产品-->
+    <select id="getProductById"  parameterType="java.lang.Integer" resultType="com.pony_admin.Product.entity.ProductEntity">
+        SELECT <include refid="ProductColumnList"/>
+        FROM `product` as p
+        where p.id = #{productId}
+    </select>
+
+
+    <!--根据产品编码获取对应产品-->
+    <select id="getProductByProductNumber"  parameterType="java.lang.String" resultType="com.pony_admin.Product.entity.ProductEntity">
+        SELECT <include refid="ProductColumnList"/>
+        FROM `product` as p
+        where p.product_number = #{productNumber}
+    </select>
+
+    <!--根据查询条件获取产品列表-->
+    <select id="getProductListByQuerybean"  parameterType="com.pony_admin.Product.entity.querybean.ProductQueryBean" resultType="com.pony_admin.Product.entity.ProductEntity">
+        SELECT <include refid="ProductColumnList"/>
+               ,pp.price as originalPrice
+        FROM `product` as p
+        <include refid="jionPrice"/>
+
+        <where>
+
+            <if test="productNumber != null and productNumber != ''">
+                and product_number like '%${productNumber}%'
+            </if>
+            <if test="categoryCodeOne != null and categoryCodeOne != '-1'">
+                and category_code_one = #{categoryCodeOne}
+            </if>
+            <if test="categoryCodeTwo != null and categoryCodeTwo != '-1'">
+                and category_code_two like #{categoryCodeTwo}
+            </if>
+            <if test="categoryCodeThree != null and categoryCodeThree != '-1'">
+                and category_code_three like #{categoryCodeThree}
+            </if>
+            <if test="reservationType==0 ">
+                and reservation_id = 0
+            </if>
+            <if test="reservationType>0 ">
+                and reservation_id &gt; 0
+            </if>
+        </where>
+        limit 0,1000
+    </select>
+
+    <!--产品信息修改-->
+    <update id="updateProduct" parameterType="com.pony_admin.Product.entity.ProductEntity">
+        update product
+           set product_name = #{productName},
+               reservation_id = #{reservationId},
+               weight = #{weight},
+               product_width = #{productWidth},
+               product_length = #{productLength},
+               product_high = #{productHigh},
+               category_code_one = #{categoryCodeOne},
+               category_code_two = #{categoryCodeTwo},
+               category_code_three = #{categoryCodeThree},
+               reservation_id = #{reservationId},
+               reservation_pic_url = #{reservationPicUrl},
+               reservation_pic_height = #{reservationPicHeight},
+               reservation_pic_width = #{reservationPicWidth},
+               alert_number = #{alertNumber},
+               product_icon_url = #{productIconUrl},
+               unit = #{unit}
+         WHERE id=#{id}
+    </update>
+
+    <!--产品促销信息修改-->
+    <update id="updateProductPromotion" parameterType="com.pony_admin.Product.entity.ProductEntity">
+        update product
+        set promotion_price = #{promotionPrice},
+            promotion_type = #{promotionType},
+            promotion_begin_time = #{promotionBeginTime},
+            promotion_end_time = #{promotionEndTime},
+            id_restriction_number = #{idRestrictionNumber},
+            credit_score = #{creditScore},
+            promotion_number = #{promotionNumber},
+            promotion_number_original = #{promotionNumberOriginal}
+        WHERE id=#{id}
+    </update>
+    <!--resultMap and sql-->
+
+
+
+
+    <sql id="ProductColumnList">
+        p.id as id,
+        p.product_name as productName,
+        p.product_number as productNumber,
+        p.reservation_id as reservationId,
+        p.product_icon_url as productIconUrl,
+        p.weight as weight,
+        p.product_width as productWidth,
+        p.product_length as productLength,
+        p.product_high as productHigh,
+        p.promotion_type as promotionType,
+        p.promotion_begin_time as promotionBeginTime,
+        p.promotion_end_time as promotionEndTime,
+        p.promotion_number as promotionNumber,
+        p.promotion_price as promotionPrice,
+        p.id_restriction_number as idRestrictionNumber,
+        p.credit_score as creditScore,
+        p.category_code_one as categoryCodeOne,
+        p.category_code_two as categoryCodeTwo,
+        p.category_code_three as categoryCodeThree,
+        p.reservation_id as reservationId,
+        reservation_pic_url as reservationPicUrl,
+        reservation_pic_height as reservationPicHeight,
+        reservation_pic_width as reservationPicWidth,
+        p.unit as unit,
+        p.monthly_sales as monthlySales,
+        p.promotion_number_original as promotionNumberOriginal
+
+    </sql>
+    <sql id="jionPrice">
+        left join (
+        select *
+        from (
+        select *
+        from product_price
+        where enable_date &lt;= now()<!--DATE_FORMAT('${currentTime}','%Y-%m-%d %H:%i:%S')-->
+        )a
+        group by a.product_id
+        having max(a.enable_date)
+        ) pp
+        on p.id =pp.product_id
+    </sql>
+</mapper>

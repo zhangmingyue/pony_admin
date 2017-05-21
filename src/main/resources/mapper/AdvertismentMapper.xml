@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.AdvertisementDAO">
+
+    <!--根据查询条件获取广告列表 &lt; &gt;-->
+    <select id="getAdvertisementList" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.QueryBean.AdvertisementQueryBean" resultType="com.pony_admin.AdvertisementAndSpecial.entity.Advertisement">
+
+        SELECT <include refid="AdvertisementColumnList"/>
+        FROM  advertisement
+        <where>
+            <if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
+                begin_time &gt;= DATE_FORMAT('${beginTime}','%Y-%m-%d %H:%i:%S') and
+                begin_time &lt;= DATE_FORMAT('${endTime}','%Y-%m-%d %H:%i:%S')
+            </if>
+            <if test="advertisementName !=null and advertisementName != '' ">
+                and advertisement_name like '%${advertisementName}%'
+            </if>
+        </where>
+        order by weight DESC
+        limit 0,1000
+
+    </select>
+
+    <!--根据广告ID获取广告-->
+    <select id="getAdvertisementByAdvertisementId" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.QueryBean.AdvertisementQueryBean" resultType="com.pony_admin.AdvertisementAndSpecial.entity.Advertisement">
+
+        SELECT <include refid="AdvertisementColumnList"/>
+        FROM `advertisement`
+        WHERE id = #{advertisementId}
+
+    </select>
+
+    <!--添加广告-->
+    <insert id="addAdvertisement" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.Advertisement">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `advertisement`
+                    (`product_id`,
+                     `begin_time`,
+                     `end_time`,
+                     `advertisement_picture_url`,
+                     `weight`,
+                     `picture_high`,
+                     `picture_width`,
+                     `advertisement_name`
+                    )VALUES(
+                     #{productId},
+                     #{beginTime},
+                     #{endTime},
+                     #{advertisementPictureUrl},
+                     #{weight},
+                     #{pictureHigh},
+                     #{pictureWidth},
+                     #{advertisementName})
+
+    </insert>
+
+
+    <!--修改广告-->
+    <update id="updateAdvertisement" parameterType="com.pony_admin.AdvertisementAndSpecial.entity.Advertisement">
+
+        update advertisement
+           set product_id = #{productId},
+               begin_time = #{beginTime},
+               end_time = #{endTime},
+               advertisement_picture_url = #{advertisementPictureUrl},
+               weight = #{weight},
+               picture_high = #{pictureHigh},
+               picture_width = #{pictureWidth},
+               advertisement_name = #{advertisementName}
+         WHERE id=#{id}
+
+    </update>
+
+
+    <!--删除广告-->
+    <delete id="deleteAdvertisementByAdvertisementId"  parameterType="java.lang.Integer">
+
+        delete from advertisement
+              where id = #{id}
+
+    </delete>
+
+
+
+    <!--resultMap and sql-->
+
+    <sql id="AdvertisementColumnList">
+
+        id as id,
+        product_id as productId,
+        begin_time as beginTime,
+        end_time as endTime,
+        advertisement_picture_url as advertisementPictureUrl,
+        weight as weight,
+        picture_high as pictureHigh,
+        picture_width as pictureWidth,
+        advertisement_name as advertisementName
+
+    </sql>
+
+
+
+
+</mapper>

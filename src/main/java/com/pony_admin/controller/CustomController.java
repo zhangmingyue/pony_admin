@@ -1,5 +1,11 @@
 package com.pony_admin.controller;
 
+import com.pony_admin.Product.entity.ProductEntity;
+import com.pony_admin.Product.entity.ProductPictureEntity;
+import com.pony_admin.Product.entity.ProductPriceEntity;
+import com.pony_admin.Product.service.ProductService;
+import com.pony_admin.Product.service.ProductPictureService;
+import com.pony_admin.Product.service.ProductPriceService;
 import com.pony_admin.domain.*;
 import com.pony_admin.enumeration.CategoryType;
 import com.pony_admin.service.*;
@@ -8,7 +14,6 @@ import com.pony_admin.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -173,21 +177,21 @@ public class CustomController {
 
         //类目
         productEntity.setCategoryCodeOne(level1);
-        productEntity.setCategoryCodetTwo(level2);
+        productEntity.setCategoryCodeTwo(level2);
         productEntity.setCategoryCodeThree(level3);
         //商品类型
-        productEntity.setIsSpot(Integer.parseInt(productType));
-        productEntity.setReservation(reservationType);
-        productEntity.setUnit(unit);
-        //商品标题
-        productEntity.setProductName(title);
-        //商品体积
-        productEntity.setLength(Integer.parseInt(length));
-        productEntity.setWidth(Integer.parseInt(width));
-        productEntity.setHigh(Integer.parseInt(heigh));
-        //低库存预警
-        productEntity.setAlertNumber(Integer.parseInt(low));
-        //商品权重
+//        productEntity.setIsSpot(Integer.parseInt(productType));
+//        productEntity.setReservation(reservationType);
+//        productEntity.setUnit(unit);
+//        //商品标题
+//        productEntity.setProductName(title);
+//        //商品体积
+//        productEntity.setLength(Integer.parseInt(length));
+//        productEntity.setWidth(Integer.parseInt(width));
+//        productEntity.setHigh(Integer.parseInt(heigh));
+//        //低库存预警
+//        productEntity.setAlertNumber(Integer.parseInt(low));
+//        //商品权重
         productEntity.setWeight(Integer.parseInt(privilege));
 
         return productEntity;
@@ -196,7 +200,7 @@ public class CustomController {
     private ProductPictureEntity pictureEntityBuilder(String url, int cover, int id) {
         ProductPictureEntity productPictureEntity = new ProductPictureEntity();
         productPictureEntity.setProductPictureUrl(url);
-        productPictureEntity.setCoverPicture(cover);
+        productPictureEntity.setCoverpicture(cover);
         productPictureEntity.setProduct_id(id);
         return productPictureEntity;
     }
