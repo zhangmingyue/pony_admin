@@ -1,5 +1,6 @@
 package com.pony_admin.dao;
 
+import com.pony_admin.domain.SelfServiceUser;
 import com.pony_admin.domain.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,12 +11,12 @@ import java.util.List;
  * @edit:
  * @created:17/5/10
  */
-public interface UserDAO {
+public interface SelfServiceUserDAO {
 
-    int insert(User user);
+    int insert(SelfServiceUser user);
 
-    List<User> getAll();
+    List<SelfServiceUser> getAll();
 
-    User getUserByUserNameAndPassword(@Param("nickname") String nickname,
+    SelfServiceUser getUserByUserNameAndPassword(@Param("nickname") String nickname,
                                       @Param("password") String password);
 }

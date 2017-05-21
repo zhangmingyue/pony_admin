@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div th:include="title::title"></div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+                <br/>
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>运营后台登录账号
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <form class="form-horizontal" role="form" id="address_form"
+                                      th:action="@{/account/admin}" th:method="post">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">姓名(建议使用拼音)：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请填写姓名"
+                                                   id="nickname" name="nickname"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">手机号码：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请填写手机号码"
+                                                   id="phone" name="phone"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">邮箱：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请填写邮箱"
+                                                   id="email" name="email"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">密码：</label>
+
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="请填写密码"
+                                                   id="password" name="password"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="address_form" class="btn btn-success">添加用户
+                                            </button>
+                                            <button type="reset" class="btn btn-default">重置</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:include="foot::foot"></div>
+
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+<script type="application/javascript">
+    $(document).ready((function () {
+                $('#nickname');
+                $('#phone');
+                $('#email');
+                $('#password');
+
+                $('#address_form').submit(function (e) {
+
+                    var formData = new FormData($(this)[0]);
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/account/admin",
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data["result"] == true) {
+                                alert("添加用户成功");
+                                window.location.reload();
+                            } else {
+                                alert(data["msg"]);
+                            }
+                        },
+                        error: function (XMLHttpRequest) {
+                            alert(XMLHttpRequest);
+                            alert("查看发生错误，错误码：" + XMLHttpRequest.status);
+
+                        }
+                    });
+                });
+            })
+    );
+</script>
+</body>
+</html>
+</html>

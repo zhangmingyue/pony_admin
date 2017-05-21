@@ -19,6 +19,11 @@ public class PermissionServiceImpl implements PermissionService {
     UserDAO userDAO;
 
     @Override
+    public int insert(User user) {
+        return userDAO.insert(user);
+    }
+
+    @Override
     public List<User> getAll() {
         return userDAO.getAll();
     }

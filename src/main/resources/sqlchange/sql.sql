@@ -125,3 +125,19 @@ CREATE TABLE `test`.`user` (
 ALTER TABLE `test`.`user`
 ADD  `role` int(11) not NULL DEFAULT '0' comment '权限id',
 ADD  `url` VARCHAR (1024) DEFAULT NULL comment '权限页';
+
+
+CREATE TABLE `test`.`self_service_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `nickname` varchar(20) DEFAULT NULL COMMENT '用户昵称',
+  `phone` varchar(128) DEFAULT NULL COMMENT '手机号',
+  `email` varchar(128) DEFAULT NULL comment '电子邮箱',
+  `password` varchar(255) DEFAULT NULL COMMENT '密码',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
+  `status` TINYINT DEFAULT '1' COMMENT '1:有效，0:禁止登录',
+  `role` int(11) not NULL DEFAULT '0' comment '权限id',
+  `url` VARCHAR (1024) DEFAULT NULL comment '权限页',
+  PRIMARY KEY (`id`),
+  INDEX phone_index(`phone`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
