@@ -42,12 +42,12 @@ public class TimeUtil {
     }
 
     private static SimpleDateFormat getSimpleDateFormat(final String pattern, final Locale local) {
-        ThreadLocal threadLocal = (ThreadLocal)simpleDateFormatMap.get(pattern);
-        if(threadLocal == null) {
+        ThreadLocal threadLocal = (ThreadLocal) simpleDateFormatMap.get(pattern);
+        if (threadLocal == null) {
             Object var3 = lockObj;
-            synchronized(lockObj) {
-                threadLocal = (ThreadLocal)simpleDateFormatMap.get(pattern);
-                if(threadLocal == null) {
+            synchronized (lockObj) {
+                threadLocal = (ThreadLocal) simpleDateFormatMap.get(pattern);
+                if (threadLocal == null) {
                     threadLocal = new ThreadLocal() {
                         protected SimpleDateFormat initialValue() {
                             return new SimpleDateFormat(pattern, local);
@@ -58,7 +58,7 @@ public class TimeUtil {
             }
         }
 
-        return (SimpleDateFormat)threadLocal.get();
+        return (SimpleDateFormat) threadLocal.get();
     }
 
     private static SimpleDateFormat getSimpleDateFormat(String pattern) {
@@ -66,19 +66,22 @@ public class TimeUtil {
     }
 
     public static String format(Date date, String pattern) {
-        return date == null?null:getSimpleDateFormat(pattern).format(date);
+        return date == null ? null : getSimpleDateFormat(pattern).format(date);
     }
 
     public static Date parse(String dateStr, String pattern) throws ParseException {
+        if (Strings.isNullOrEmpty(dateStr)) {
+            return null;
+        }
         return getSimpleDateFormat(pattern).parse(dateStr);
     }
 
     public static Date autoParseDate(String dateStr) throws ParseException {
         Date result = null;
-        if(Strings.isNullOrEmpty(dateStr)) {
-            if(dateStr.matches("\\d{4}-\\d{1,2}-\\d{1,2}")) {
+        if (Strings.isNullOrEmpty(dateStr)) {
+            if (dateStr.matches("\\d{4}-\\d{1,2}-\\d{1,2}")) {
                 result = parse(dateStr, "yyyy-MM-dd");
-            } else if(dateStr.matches("\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}")) {
+            } else if (dateStr.matches("\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}")) {
                 result = parse(dateStr, "yyyy-MM-dd HH:mm:ss");
             }
         }
@@ -107,7 +110,7 @@ public class TimeUtil {
 
     public static long getPreviousDayBeginTimeInTimeMillis(int n) {
         long currentTimeInMs = System.currentTimeMillis();
-        return ((currentTimeInMs + 28800000L) / 86400000L + (long)n) * 86400000L - 28800000L;
+        return ((currentTimeInMs + 28800000L) / 86400000L + (long) n) * 86400000L - 28800000L;
     }
 
     public static String getWeekBeginDate(int index) {
@@ -118,7 +121,7 @@ public class TimeUtil {
     }
 
     public static String getPreviousMinuteInDate(int n) {
-        Date date = new Date(System.currentTimeMillis() + (long)n * 60000L);
+        Date date = new Date(System.currentTimeMillis() + (long) n * 60000L);
         String dateInFormatter = getSimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 
         try {
@@ -131,7 +134,7 @@ public class TimeUtil {
     }
 
     public static String getPreviousMinuteInDate(String time, int n) {
-        Date date = new Date(parseDatetime(time) + (long)n * 60000L);
+        Date date = new Date(parseDatetime(time) + (long) n * 60000L);
         String dateInFormatter = getSimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 
         try {
@@ -156,7 +159,7 @@ public class TimeUtil {
     }
 
     public static String parseTime(long time, String pattern) {
-        if(time < 5000000000L) {
+        if (time < 5000000000L) {
             time *= 1000L;
         }
 
@@ -165,7 +168,7 @@ public class TimeUtil {
     }
 
     public static long parseDatetime(String datetime) {
-        if(!datetime.contains(":")) {
+        if (!datetime.contains(":")) {
             datetime = datetime + " 00:00:00";
         }
 
@@ -191,7 +194,7 @@ public class TimeUtil {
     }
 
     public static int belongToHour(long time) {
-        if(time < 5000000000L) {
+        if (time < 5000000000L) {
             time *= 1000L;
         }
 
@@ -207,7 +210,7 @@ public class TimeUtil {
 
     public static final long belongToDay(long time) {
         long day;
-        if(time < 5000000000L) {
+        if (time < 5000000000L) {
             day = (time * 1000L + 28800000L) / 86400000L * 86400000L - 28800000L;
         } else {
             day = (time + 28800000L) / 86400000L * 86400000L - 28800000L;
@@ -245,7 +248,7 @@ public class TimeUtil {
         long millionSeconds = 0L;
 
         try {
-            if(isValidDate(date)) {
+            if (isValidDate(date)) {
                 millionSeconds = getSimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date).getTime();
             }
         } catch (Exception var4) {
@@ -319,7 +322,7 @@ public class TimeUtil {
     }
 
     public static final Date addYear(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
@@ -330,7 +333,7 @@ public class TimeUtil {
     }
 
     public static final Date addMonth(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
@@ -341,7 +344,7 @@ public class TimeUtil {
     }
 
     public static final Date addDay(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
@@ -352,7 +355,7 @@ public class TimeUtil {
     }
 
     public static final Date addHour(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
@@ -363,7 +366,7 @@ public class TimeUtil {
     }
 
     public static final Date addMinute(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
@@ -374,7 +377,7 @@ public class TimeUtil {
     }
 
     public static final Date addSecond(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
@@ -385,7 +388,7 @@ public class TimeUtil {
     }
 
     public static final Date addMillisecond(Date inputDate, int amount) {
-        if(inputDate == null) {
+        if (inputDate == null) {
             return null;
         } else {
             Calendar calendar = Calendar.getInstance();
