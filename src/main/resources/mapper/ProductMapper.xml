@@ -93,25 +93,25 @@
 
         <where>
 
-            <if test="productNumber != null and productNumber != ''">
-                and product_number like '%${productNumber}%'
-            </if>
-            <if test="categoryCodeOne != null and categoryCodeOne != '-1'">
-                and category_code_one = #{categoryCodeOne}
-            </if>
-            <if test="categoryCodeTwo != null and categoryCodeTwo != '-1'">
-                and category_code_two like #{categoryCodeTwo}
-            </if>
-            <if test="categoryCodeThree != null and categoryCodeThree != '-1'">
-                and category_code_three like #{categoryCodeThree}
-            </if>
-            <if test="reservationType==0 ">
-                and reservation_id = 0
-            </if>
-            <if test="reservationType>0 ">
-                and reservation_id &gt; 0
-            </if>
-        </where>
+        <if test="productNumber != null and productNumber != ''">
+            and product_number like '%${productNumber}%'
+        </if>
+        <if test="categoryCodeOne != null and categoryCodeOne != '-1'">
+            and category_code_one = #{categoryCodeOne}
+        </if>
+        <if test="categoryCodeTwo != null and categoryCodeTwo != '-1'">
+            and category_code_two like #{categoryCodeTwo}
+        </if>
+        <if test="categoryCodeThree != null and categoryCodeThree != '-1'">
+            and category_code_three like #{categoryCodeThree}
+        </if>
+        <if test="reservationType==0 ">
+            and reservation_id = 0
+        </if>
+        <if test="reservationType>0 ">
+            and reservation_id &gt; 0
+        </if>
+    </where>
         limit 0,1000
     </select>
 
