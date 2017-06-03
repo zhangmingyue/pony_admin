@@ -57,108 +57,37 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>广告添加
-                                    <small>请注意:一级类目直接添加,二级类目需要选择一级目录后添加,三级目录需要选择二级目录后添加</small>
-                                </h2>
+                                <h2>地区添加
+                                    </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="fa-hover col-md-3 col-sm-4 col-xs-12">
-                                <a href="#/arrow-left"><i class="fa fa-arrow-left"></i>返回继续添加</a>
-                            </div>
+
                             <div class="x_content">
 
                                 <form class="form-horizontal" role="form" id="advertisementForm"
-                                      th:action="@{/Advertisement/addAdvertisement}" th:method="post" enctype ="multipart/form-data">
+                                      th:action="@{/warehouse/districtAdd}" th:method="get">
 
                                     <div class="form-group">
 
 
-                                        <label class="control-label col-sm-2">广告名称：</label>
+                                        <label class="control-label col-sm-2">地区名称：</label>
 
                                         <div class="controls col-sm-3">
-                                            <input type="text" class="form-control" placeholder="请输入广告名称"
-                                                   id="advertisementName" name="advertisementName"/>
+                                            <input type="text" class="form-control" placeholder="请输入地区名称"
+                                                   id="districtName" name="districtName"/>
                                         </div>
                                     </div>
 
 
-                                    <div class="form-group">
 
-
-                                        <label class="control-label col-sm-2">开始时间：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="text" class="form-control dtpicker form_datetime"
-                                                   id="beginTimePage" name="beginTimePage" placeholder="开始时间" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-
-
-                                        <label class="control-label col-sm-2">结束时间：</label>
-
-                                       <div class="controls col-sm-3">
-                                            <input type="text" class="form-control dtpicker form_datetime"
-                                                   id="endTimePage" name="endTimePage" placeholder="结束时间" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-
-
-                                        <label class="control-label col-sm-2">广告权重：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="text" class="form-control" placeholder="广告权重"
-                                                   id="weight" name="weight"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-
-
-                                        <label class="control-label col-sm-2">产品编码：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input id="productId" type="hidden" name="productId"/>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" onchange="checkProductNumber();" class="form-control" placeholder="产品编码"
-                                                        id="productNumber" />
-                                                    </td>
-                                                    <td>
-                                                        <div id="productNumberRight" type="hiden">
-                                                            <img th:src="@{/image/right_icon.jpg}"/>
-                                                            <span>产品编码正确</span>
-                                                        </div>
-
-                                                        <div id="productNumberWrong" type="hiden">
-                                                            <img th:src="@{/image/wrong_icon.jpg}"/>
-                                                            <span>产品编码错误</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-
-
-                                        <label class="control-label col-sm-2">广告图片：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="file" class="form-control" name="advertisementPicture"/>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button type="submit" form="advertisementForm" class="btn btn-success">添加广告
+                                            <button type="submit" form="advertisementForm" class="btn btn-success">添加
                                             </button>
                                             <button type="reset" class="btn btn-default">重置</button>
                                         </div>

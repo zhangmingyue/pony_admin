@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>小马自提管理后台 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Dropzone.js -->
+    <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link th:href="@{/build/css/custom.min.css}" rel="stylesheet"/>
+    <!--validator-->
+    <link th:href="@{/js/validator.min.js}" rel="stylesheet"/>
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div th:include="title::title"></div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div th:include="menu_profile::menu_profile"></div>
+                <!-- /menu profile quick info -->
+                <br/>
+                <!-- sidebar menu -->
+                <div th:include="sidebar_menu"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:include="top_navigation"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>自提点修改
+                                   </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <form class="form-horizontal" role="form" id="advertisementForm"
+                                      th:action="@{/businessOutlet/businessOutletEdit}" th:method="post" enctype ="multipart/form-data">
+                                    <input type="hidden" th:value="${businessOutlet.id}" name="id" />
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">自提点名称：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <input type="text" class="form-control" placeholder="请输入自提点名称"
+                                                   id="advertisementName" th:value="${businessOutlet.businessOutletName}" name="businessOutletName"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+
+
+                                        <label class="control-label col-sm-2">所属地区：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <select class="form-control" id="districtSelect"  name="districtId">
+
+                                                <option th:each="var:${districtList}" th:value="${var.id}"
+                                                        th:text="${var.districtName}" th:selected="${businessOutlet.districtId==var.id}">
+
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                    <label class="control-label col-sm-2">供货仓库：</label>
+
+                                        <div class="controls col-sm-3">
+                                            <select class="form-control" id="warehouseSelect" name="warehouseId" >
+
+                                                <option th:each="var:${warehouseList}" th:value="${var.id}"
+                                                        th:text="${var.warehouseName}" th:selected="${businessOutlet.warehouseId==var.id}">
+
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" form="advertisementForm" class="btn btn-success">保存修改
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <!--<div id="picture_div" class="form-group">-->
+
+
+                                        <!--<label class="control-label col-sm-2">广告图片URL：</label>-->
+
+                                        <!--<div class="controls col-sm-3">-->
+                                            <!--<input type="text" class="form-control" th:value="${advertisement.title}" placeholder="请输入三级类目名称标题"-->
+                                                   <!--id="advertisementPictureUrl" name="advertisementPictureUrl"/>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <div th:include="foot::foot"></div>
+
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/bootstrap-editable/bootstrap-editable.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/vendors/fastclick/lib/fastclick.js}"></script>
+<!-- NProgress -->
+<script th:src="@{/vendors/nprogress/nprogress.js}"></script>
+<!-- Dropzone.js -->
+<script th:src="@{/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+<!--&lt;!&ndash; Custom Theme Scripts &ndash;&gt;-->
+<script th:src="@{/build/js/custom.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+<script type="text/javascript">
+    $("#districtSelect").on("change", function (e) {
+        $("#warehouseSelect").html('<option value="-1" org1-parentId="-1">请选择</option>');
+
+
+
+        var districtId = $(e.target).val();
+        console.log(districtId);
+
+        $.ajax({
+            type: 'POST',
+            url: "/businessOutlet/getWarehouseListByDistrictId/" + districtId,
+            dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept': 'application/json'
+            },
+            cache: false,
+            data: JSON.stringify,
+
+            success: function (data) {
+                var warehouseList = data.warehouseList;
+
+                var orgFrameEle = document.createDocumentFragment();
+
+                /*<![CDATA[*/
+                for (var i = 0, len = warehouseList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = warehouseList[i].id;
+//                    tmpOptionEle.setAttribute("parentId", orgModelList[i].parent);
+                    tmpOptionEle.innerHTML = warehouseList[i].warehouseName;
+                    orgFrameEle.appendChild(tmpOptionEle);
+                }
+                /*]]>*/
+
+                $("#warehouseSelect").append(orgFrameEle);
+            },
+            error: function (XMLHttpRequest) {
+            }
+        })
+
+    });
+</script>
+</body>
+</html>
+</html>

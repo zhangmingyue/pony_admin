@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.WarehouseDAO">
+
+    <!--根据查询条件获取仓库列表 &lt; &gt;-->
+    <select id="getWarehouseList" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.QueryBean.WarehouseQueryBean" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.Warehouse">
+
+        SELECT <include refid="WarehouseColumnList"/>
+        FROM  warehouse
+        <where>
+            <if test="districtId != 0 ">
+                and district_id = #{districtId}
+            </if>
+            <if test="districtId == 0 ">
+                and district_id != 0
+            </if>
+            <if test="warehouseName !=null and warehouseName != '' ">
+                and warehouse_name like '%${warehouseName}%'
+            </if>
+        </where>
+        limit 0,1000
+
+    </select>
+
+    <!--根据仓库ID获取仓库-->
+    <select id="getWarehouseByWarehouseId" parameterType="java.lang.Integer" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.Warehouse">
+
+        SELECT <include refid="WarehouseColumnList"/>
+        FROM `warehouse`
+        WHERE id = #{warehousetId}
+
+    </select>
+    <!--根据地区ID获取仓库列表-->
+    <select id="getWarehouseListByDistrictId" parameterType="java.lang.Integer" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.Warehouse">
+
+        SELECT <include refid="WarehouseColumnList"/>
+        FROM `warehouse`
+        WHERE district_id = #{districtId}
+
+    </select>
+    <!--添加仓库-->
+    <insert id="addWarehouse" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.Warehouse">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `warehouse`
+        (`warehouse_name`,
+        `district_id`,
+        `father_warehouse_id`
+        )VALUES(
+        #{warehouseName},
+        #{districtId},
+        0)
+
+    </insert>
+
+    <!--修改仓库-->
+    <update id="updateWarehouse" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.Warehouse">
+
+        update warehouse
+        set warehouse_name = #{warehouseName},
+        district_id = #{districtId}
+        WHERE id=#{id}
+
+    </update>
+
+    <!--根据查询条件获取地区列表 &lt; &gt;-->
+    <select id="getDistrictList" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.QueryBean.DistrictQueryBean" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.District">
+
+        SELECT <include refid="DistrictColumnList"/>
+        FROM  district
+        <where>
+
+            <if test="districtName !=null and districtName != '' ">
+                and district_name like '%${districName}%'
+            </if>
+        </where>
+        limit 0,1000
+
+    </select>
+
+    <!--根据地区ID获取地区-->
+    <select id="getDistrictByDistrictId" parameterType="java.lang.Integer" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.District">
+
+        SELECT <include refid="DistrictColumnList"/>
+        FROM `district`
+        WHERE id = #{districtId}
+
+    </select>
+
+    <!--添加地区-->
+    <insert id="addDistrict" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.District">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `district`
+        (`districtName`
+        )VALUES(
+        #{district_name})
+
+    </insert>
+
+
+    <!--修改地区-->
+    <update id="updateDistrict" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.District">
+
+        update district
+        set district_name = #{districtName}
+        WHERE id=#{id}
+
+    </update>
+
+    <!--resultMap and sql-->
+
+    <sql id="DistrictColumnList">
+
+        id as id,
+        district_name as districtName
+
+    </sql>
+
+    <sql id="WarehouseColumnList">
+
+        id as id,
+        warehouse_name as warehouseName,
+        district_id as districtId
+
+    </sql>
+
+
+</mapper>
