@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pony_admin.dao.BusinessOutletDAO">
+
+    <!--根据查询条件获取自提点列表 &lt; &gt;-->
+    <select id="getBusinessOutletList" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.QueryBean.BusinessOutletQueryBean" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.BusinessOutlet">
+
+        SELECT <include refid="BusinessOutletColumnList"/>
+        FROM  business_outlet
+        <where>
+            <if test="businessOutletName !=null and businessOutletName != '' ">
+                and business_outlet_name like '%${businessOutletName}%'
+            </if>
+            <if test="districtId != 0 ">
+                and district_id = #{districtId}
+            </if>
+        </where>
+        limit 0,1000
+
+    </select>
+
+   <!--根据自提点ID获取自提点-->
+    <select id="getBusinessOutletByBusinessOutletId" parameterType="java.lang.Integer" resultType="com.pony_admin.BusinessOutletAndWarehouse.entity.BusinessOutlet">
+
+        SELECT <include refid="BusinessOutletColumnList"/>
+        FROM `business_outlet`
+        WHERE id = #{businessOutletId}
+
+    </select>
+
+    <!--添加自提点-->
+    <insert id="addBusinessOutlet" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.BusinessOutlet">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO `business_outlet`
+        (`business_outlet_name`,
+        `warehouse_id`,
+        district_id
+        )VALUES(
+        #{businessOutletName},
+        #{warehouseId}
+        #{districtId})
+
+    </insert>
+
+
+    <!--修改自提点-->
+    <update id="updateBusinessOutlet" parameterType="com.pony_admin.BusinessOutletAndWarehouse.entity.BusinessOutlet">
+
+        update business_outlet
+           set business_outlet_name = #{businessOutletName},
+               warehouse_id = #{warehouseId},
+               district_id = #{districtId}
+         WHERE id=#{id}
+
+    </update>
+
+
+
+    <!--resultMap and sql-->
+
+    <sql id="BusinessOutletColumnList">
+
+        id as id,
+        business_outlet_name as businessOutletName,
+        warehouse_id as warehouseId,
+        district_id as districtId
+    </sql>
+
+
+
+
+</mapper>

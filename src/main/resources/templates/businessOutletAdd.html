@@ -57,9 +57,8 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>广告添加
-                                    <small>请注意:一级类目直接添加,二级类目需要选择一级目录后添加,三级目录需要选择二级目录后添加</small>
-                                </h2>
+                                <h2>自提点添加
+                                    </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
@@ -71,94 +70,58 @@
                             </div>
                             <div class="x_content">
 
-                                <form class="form-horizontal" role="form" id="advertisementForm"
-                                      th:action="@{/Advertisement/addAdvertisement}" th:method="post" enctype ="multipart/form-data">
+                                <form class="form-horizontal" role="form" id="businessOutletForm"
+                                      th:action="@{/businessOutlet/businessOutletAdd}" th:method="get">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">自提点名称：</label>
 
+                                        <div class="controls col-sm-6">
+                                            <input type="text" class="form-control" placeholder="自提点名称"
+                                                   id="businessOutletName"  name="businessOutletName" required="required"/>
+                                        </div>
+
+                                    </div>
                                     <div class="form-group">
 
 
-                                        <label class="control-label col-sm-2">广告名称：</label>
+                                        <label class="control-label col-sm-2">所属区域：</label>
 
                                         <div class="controls col-sm-3">
-                                            <input type="text" class="form-control" placeholder="请输入广告名称"
-                                                   id="advertisementName" name="advertisementName"/>
+                                            <select class="form-control" id="districtSelect" name="districtId" >
+                                                <option th:each="var:${districtList}" th:value="${var.id}"
+                                                        th:text="${var.districtName}">
+
+                                                </option>
+                                            </select>
                                         </div>
+
                                     </div>
-
-
                                     <div class="form-group">
 
 
-                                        <label class="control-label col-sm-2">开始时间：</label>
+                                        <label class="control-label col-sm-2">供货仓库：</label>
+
 
                                         <div class="controls col-sm-3">
-                                            <input type="text" class="form-control dtpicker form_datetime"
-                                                   id="beginTimePage" name="beginTimePage" placeholder="开始时间" />
+                                            <select class="form-control" id="warehouseSelect" name="warehouseId" >
+                                                <option value="0">
+                                                    --请选择--
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
 
 
-                                        <label class="control-label col-sm-2">结束时间：</label>
-
-                                       <div class="controls col-sm-3">
-                                            <input type="text" class="form-control dtpicker form_datetime"
-                                                   id="endTimePage" name="endTimePage" placeholder="结束时间" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
 
 
-                                        <label class="control-label col-sm-2">广告权重：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="text" class="form-control" placeholder="广告权重"
-                                                   id="weight" name="weight"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
 
 
-                                        <label class="control-label col-sm-2">产品编码：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input id="productId" type="hidden" name="productId"/>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" onchange="checkProductNumber();" class="form-control" placeholder="产品编码"
-                                                        id="productNumber" />
-                                                    </td>
-                                                    <td>
-                                                        <div id="productNumberRight" type="hiden">
-                                                            <img th:src="@{/image/right_icon.jpg}"/>
-                                                            <span>产品编码正确</span>
-                                                        </div>
-
-                                                        <div id="productNumberWrong" type="hiden">
-                                                            <img th:src="@{/image/wrong_icon.jpg}"/>
-                                                            <span>产品编码错误</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-
-
-                                        <label class="control-label col-sm-2">广告图片：</label>
-
-                                        <div class="controls col-sm-3">
-                                            <input type="file" class="form-control" name="advertisementPicture"/>
-                                        </div>
-                                    </div>
                                     <div class="clearfix"></div>
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <button type="submit" form="advertisementForm" class="btn btn-success">添加广告
+                                            <button type="submit" form="businessOutletForm" class="btn btn-success">添加
                                             </button>
                                             <button type="reset" class="btn btn-default">重置</button>
                                         </div>
@@ -206,46 +169,16 @@
 <script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
 <script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".form_datetime").datetimepicker({
-            format: "yyyy-mm-dd hh:ii:ss",
-            minView: 2,
-            maxView: 2,
-            autoclose: true,
-            todayBtn: true,
-            todayHighlight: true,
-            language: 'zh-CN',
-            viewSelect: 'month',
-            pickTime: true
-        });
+    $("#districtSelect").on("change", function (e) {
+        $("#warehouseSelect").html('<option value="-1" org1-parentId="-1">请选择</option>');
 
 
-        $('#productNumberRight').hide();
-        $('#productNumberWrong').hide();
+        var districtId = $(e.target).val();
+        console.log(districtId);
 
-        var advertisement_id = $('#advertisement_id').val();
-        if(advertisement_id == 0){
-         //   $('#picture_div').css('display','none');
-            $('#picture_div').hide();
-        }
-    });
-    function testHide(){
-        var i=1;
-        alert(i);
-        i++;
-        if(i%2 == 0){
-            $('#picture_div').hide();
-        }else{
-            $('#picture_div').show();
-
-        }
-
-    };
-    function checkProductNumber(){
-        var productNumber = $('#productNumber').val();
         $.ajax({
             type: 'POST',
-            url: "/Advertisement/checkProductNumber?productNumber=" + productNumber,
+            url: "/businessOutlet/getWarehouseListByDistrictId/" + districtId,
             dataType: 'json',
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
@@ -255,23 +188,27 @@
             data: JSON.stringify,
 
             success: function (data) {
-                var productEntity = data["productEntity"];
+                var warehouseList = data.warehouseList;
 
-                if(productEntity != null){
-                    $('#productNumberRight').show();
-                    $('#productNumberWrong').hide();
-                    $('#productId').val(productEntity.id);
-                }else{
-                    $('#productNumberRight').hide();
-                    $('#productNumberWrong').show();
-                    $('#productId').val('');
+                var orgFrameEle = document.createDocumentFragment();
+
+                /*<![CDATA[*/
+                for (var i = 0, len = warehouseList.length; i < len; i++) {
+                    var tmpOptionEle = document.createElement("option");
+                    tmpOptionEle.value = warehouseList[i].id;
+//                    tmpOptionEle.setAttribute("parentId", orgModelList[i].parent);
+                    tmpOptionEle.innerHTML = warehouseList[i].warehouseName;
+                    orgFrameEle.appendChild(tmpOptionEle);
                 }
+                /*]]>*/
 
+                $("#warehouseSelect").append(orgFrameEle);
             },
             error: function (XMLHttpRequest) {
             }
         })
-    }
+
+    });
 </script>
 </body>
 </html>
