@@ -18,6 +18,8 @@ public class SelfServiceUser {
     private int status;
     private int role;
     private String url;
+    private int businessoutletId;
+    private int warehouseId;
 
     public int getId() {
         return id;
@@ -99,9 +101,25 @@ public class SelfServiceUser {
         this.url = url;
     }
 
+    public int getBusinessoutletId() {
+        return businessoutletId;
+    }
+
+    public void setBusinessoutletId(int businessoutletId) {
+        this.businessoutletId = businessoutletId;
+    }
+
+    public int getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(int warehouseId) {
+        this.warehouseId = warehouseId;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
+        return "SelfServiceUser{" +
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
                 ", phone='" + phone + '\'' +
@@ -112,6 +130,8 @@ public class SelfServiceUser {
                 ", status=" + status +
                 ", role=" + role +
                 ", url='" + url + '\'' +
+                ", businessoutletId=" + businessoutletId +
+                ", warehouseId=" + warehouseId +
                 '}';
     }
 }

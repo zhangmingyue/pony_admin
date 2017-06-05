@@ -14,7 +14,9 @@
         `password`,
         `create_time` ,
         `last_login_time`,
-        `status`
+        `status`,
+        `businessoutlet_id`,
+        `warehouse_id`
         )VALUES(
         #{nickname},
         #{phone},
@@ -22,7 +24,9 @@
         #{password},
         #{create_time},
         #{last_login_time},
-        #{status}
+        #{status},
+        #{businessoutletId},
+        #{warehouseId}
         )
     </insert>
 
