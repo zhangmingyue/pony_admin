@@ -141,3 +141,7 @@ CREATE TABLE `test`.`self_service_user` (
   PRIMARY KEY (`id`),
   INDEX phone_index(`phone`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `test`.`self_service_user`
+ADD  `businessoutlet_id` int(11)  comment '自提柜id',
+add `warehouse_id` int(11) comment '仓库id';
